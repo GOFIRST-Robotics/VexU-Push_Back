@@ -1,82 +1,77 @@
 #include "main.h"
-pros::MotorGroup left_motors({1, -2, 3, -4, 5}, pros::MotorGearset::blue); // left motors use 600 RPM cartridges
-pros::MotorGroup right_motors({-6, 7, -8, 9, -10}, pros::MotorGearset::blue); // right motors use 200 RPM cartridges
-lemlib::Omniwheel::NEW_275
+#include "lemlib/chassis/trackingWheel.hpp"
+#include <memory>
+pros::MotorGroup
+    left_motors({1, -2, 3, -4, 5},
+                pros::MotorGearset::blue); // left motors use 600 RPM cartridges
+pros::MotorGroup right_motors(
+    {-6, 7, -8, 9, -10},
+    pros::MotorGearset::blue); // right motors use 200 RPM cartridges
 
 // drivetrain settings
-lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group
-                              &right_motor_group, // right motor group
-                              10, // 10 inch track width
-                              lemlib::Omniwheel::NEW_275, // using new 2.75" omnis
-                              360, // drivetrain rpm is 360
-                              2 // horizontal drift is 2 (for now)
-);
+lemlib::Drivetrain
+    drivetrain(&left_motors,               // left motor group
+               &right_motors,              // right motor group
+               10,                         // 10 inch track width
+               lemlib::Omniwheel::NEW_275, // using new 2.75" omnis
+               360,                        // drivetrain rpm is 360
+               2                           // horizontal drift is 2 (for now)
+    );
 
-lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel 1, set to null
-                            nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs
-                            nullptr, // horizontal tracking wheel 1
-                            nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
-                            nullptr, // inertial sensor
+pros::Imu imu_sensor(10);
+lemlib::OdomSensors sensors(
+    nullptr, // vertical tracking wheel 1, set to null
+    nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs
+    nullptr, // horizontal tracking wheel 1
+    nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a
+             // second one
+    &imu_sensor // inertial sensor
 );
 
 // lateral PID controller
-lemlib::ControllerSettings lateral_controller(10, // proportional gain (kP)
-                                              0, // integral gain (kI)
-                                              3, // derivative gain (kD)
-                                              3, // anti windup
-                                              1, // small error range, in inches
-                                              100, // small error range timeout, in milliseconds
-                                              3, // large error range, in inches
-                                              500, // large error range timeout, in milliseconds
-                                              20 // maximum acceleration (slew)
-);
+lemlib::ControllerSettings
+    lateral_controller(10,  // proportional gain (kP)
+                       0,   // integral gain (kI)
+                       3,   // derivative gain (kD)
+                       3,   // anti windup
+                       1,   // small error range, in inches
+                       100, // small error range timeout, in milliseconds
+                       3,   // large error range, in inches
+                       500, // large error range timeout, in milliseconds
+                       20   // maximum acceleration (slew)
+    );
 
 // angular PID controller
-lemlib::ControllerSettings angular_controller(2, // proportional gain (kP)
-                                              0, // integral gain (kI)
-                                              10, // derivative gain (kD)
-                                              3, // anti windup
-                                              1, // small error range, in degrees
-                                              100, // small error range timeout, in milliseconds
-                                              3, // large error range, in degrees
-                                              500, // large error range timeout, in milliseconds
-                                              0 // maximum acceleration (slew)
-);
+lemlib::ControllerSettings
+    angular_controller(2,   // proportional gain (kP)
+                       0,   // integral gain (kI)
+                       10,  // derivative gain (kD)
+                       3,   // anti windup
+                       1,   // small error range, in degrees
+                       100, // small error range timeout, in milliseconds
+                       3,   // large error range, in degrees
+                       500, // large error range timeout, in milliseconds
+                       0    // maximum acceleration (slew)
+    );
 
 // create the chassis
-lemlib::Chassis chassis(drivetrain, // drivetrain settings
+lemlib::Chassis chassis(drivetrain,         // drivetrain settings
                         lateral_controller, // lateral PID settings
                         angular_controller, // angular PID settings
-                        sensors // odometry sensors
+                        sensors             // odometry sensors
 
 );
 
-//Tank drive
+// Tank drive
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
-void opcontrol() {
-    // loop forever
-    while (true) {
-        // get left y and right y positions
-        int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-        int rightY = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
-
-        // move the robot
-        chassis.tank(leftY, rightY);
-
-        // delay to save resources
-        pros::delay(25);
-    }
-}
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {
-
-}
+void initialize() {}
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -123,5 +118,16 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+  // loop forever
+  while (true) {
+    // get left y and right y positions
+    int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+    int rightY = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
+    // move the robot
+    chassis.tank(leftY, rightY);
+
+    // delay to save resources
+    pros::delay(25);
+  }
 }
