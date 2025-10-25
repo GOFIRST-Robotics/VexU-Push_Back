@@ -8,6 +8,9 @@ pros::MotorGroup right_motors(
     {-6, 7, -8, 9, -10},
     pros::MotorGearset::blue); // right motors use 200 RPM cartridges
 
+pros::MotorGroup intake_first_stage_motor_group({10}, pros::MotorGears::green);
+pros::MotorGroup intake_first_stage_filter_motor_group({9}, pros::MotorGears::green);
+
 // drivetrain settings
 lemlib::Drivetrain
     drivetrain(&left_motors,               // left motor group
@@ -104,6 +107,26 @@ void competition_initialize() {}
  */
 void autonomous() {}
 
+
+// ----------------- Intake stuffs -----------------
+
+void intake_normal() {
+    intake_first_stage_motor_group.move_voltage(6000);
+    intake_first_stage_filter_motor_group.move_voltage(6000);
+}
+
+void intake_filter() {
+    intake_first_stage_motor_group.move_voltage(6000);
+    intake_first_stage_filter_motor_group.move_voltage(-6000);
+}
+
+void intake_stop() {
+    intake_first_stage_motor_group.move_voltage(00);
+    intake_first_stage_filter_motor_group.move_voltage(00);
+}
+
+
+
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -120,12 +143,15 @@ void autonomous() {}
 void opcontrol() {
   // loop forever
   while (true) {
-    // get left y and right y positions
-    int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-    int rightY = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
-
-    // move the robot
-    chassis.tank(leftY, rightY);
+    if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
+        intake_normal();
+    }
+    else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
+        intake_filter();
+    }
+    else {
+        intake_stop();
+    }
 
     // delay to save resources
     pros::delay(25);
