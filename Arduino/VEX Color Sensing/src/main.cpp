@@ -2,8 +2,10 @@
 #include "Adafruit_TCS34725.h"
 
 
-int redPort = 2;
-int bluePort = 3;
+// ------- COLOR SENSOR STUFF --------
+
+int redPort = D2;
+int bluePort = D3;
 
 int colorDiff = 0;
 
@@ -15,15 +17,22 @@ float r, g, b;
 void initializeColorSensor(int redPort, int bluePort);
 int calibrateColorSensor();
 void readColor();
+void printColorSensorTelemetry();
+void flashSeenColor();
 bool colorSeesRed();
 bool colorSeesBlue();
 
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
 
+// ------- END COLOR SENSOR STUFF --------
+
 void setup() {
+
+  pinMode(LED_BUILTIN, OUTPUT);
+
+  Serial.begin(115200);
   
   initializeColorSensor(redPort, bluePort);
-  
 }
 
 
@@ -31,7 +40,53 @@ void loop() {
   // put your main code here, to run repeatedly:
 
   readColor();
+  printColorSensorTelemetry();
+  flashSeenColor();
 
+  delay(10);
+
+}
+
+
+/*
+* Initializes the FLORA TCS34725 color sensor. A4 and A5 MUST be used for the color sensor I/O
+*/
+void initializeColorSensor(int redOutputPort, int blueOutputPort) {
+  
+  pinMode(redOutputPort, OUTPUT);
+  pinMode(blueOutputPort, OUTPUT);
+  
+  if (tcs.begin()) {
+    Serial.println("Found sensor");
+  } else {
+    Serial.println("No TCS34725 found ... check your connections");
+
+    pinMode(13, OUTPUT);
+    while (1) {
+      // panic
+      digitalWrite(LED_BUILTIN, HIGH);
+      delay(60);
+      digitalWrite(LED_BUILTIN, LOW);
+      delay(60);
+    }
+  }
+
+  Serial.print("R:\t"); Serial.print(int(r)); 
+  Serial.print("\tG:\t"); Serial.print(int(g)); 
+  Serial.print("\tB:\t"); Serial.print(int(b));
+
+  colorDiff = calibrateColorSensor();
+}
+
+void printColorSensorTelemetry() {
+  Serial.print("R:\t"); Serial.print(int(r)); 
+  Serial.print("\tG:\t"); Serial.print(int(g)); 
+  Serial.print("\tB:\t"); Serial.print(int(b));
+  Serial.print("\t Sees Red?\t"); Serial.print(colorSeesRed());
+  Serial.print("\t Sees Blue?\t"); Serial.println(colorSeesBlue());
+}
+
+void flashSeenColor() {
   if (colorSeesRed()) {
     digitalWrite(redPort, HIGH);
     digitalWrite(bluePort, LOW);
@@ -44,39 +99,6 @@ void loop() {
     digitalWrite(redPort, LOW);
     digitalWrite(bluePort, LOW);
   }
-
-  delay(10);
-
-}
-
-
-/*
-* Initializes the FLORA TCS34725 color sensor. A4 and A5 MUST be used for the color sensor I/O
-*/
-void initializeColorSensor(int redOutputPort, int bluePort) {
-
-  pinMode(redOutputPort, OUTPUT);
-  pinMode(bluePort, OUTPUT);
-  
-  if (tcs.begin()) {
-    Serial.println("Found sensor");
-  } else {
-    Serial.println("No TCS34725 found ... check your connections");
-
-    pinMode(13, OUTPUT);
-    while (1) {
-      digitalWrite(13, HIGH);
-      delay(60);
-      digitalWrite(13, LOW);
-      delay(60);
-    }
-  }
-
-  Serial.print("R:\t"); Serial.print(int(r)); 
-  Serial.print("\tG:\t"); Serial.print(int(g)); 
-  Serial.print("\tB:\t"); Serial.print(int(b));
-
-  colorDiff = calibrateColorSensor();
 }
 
 int calibrateColorSensor() {
