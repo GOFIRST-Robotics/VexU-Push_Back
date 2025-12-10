@@ -1,6 +1,11 @@
+/**
+ * Color sensing and blue/red alliance game piece detection for Xiao Seed ESP32S3 on a VEX U robot.
+ * Made by Aaron Lam for University of Minnesota VEX U team.
+ * 12/9/2025
+ */
+
 #include <Arduino.h>
 #include "Adafruit_TCS34725.h"
-
 
 // ------- COLOR SENSOR STUFF --------
 
@@ -48,6 +53,8 @@ void loop() {
 }
 
 
+// -------------------------------- COLOR SENSING METHODS -------------------------------
+
 /*
 * Initializes the FLORA TCS34725 color sensor. A4 and A5 MUST be used for the color sensor I/O
 */
@@ -78,6 +85,7 @@ void initializeColorSensor(int redOutputPort, int blueOutputPort) {
   colorDiff = calibrateColorSensor();
 }
 
+
 void printColorSensorTelemetry() {
   Serial.print("R:\t"); Serial.print(int(r)); 
   Serial.print("\tG:\t"); Serial.print(int(g)); 
@@ -85,6 +93,7 @@ void printColorSensorTelemetry() {
   Serial.print("\t Sees Red?\t"); Serial.print(colorSeesRed());
   Serial.print("\t Sees Blue?\t"); Serial.println(colorSeesBlue());
 }
+
 
 void flashSeenColor() {
   if (colorSeesRed()) {
@@ -101,11 +110,13 @@ void flashSeenColor() {
   }
 }
 
+
 int calibrateColorSensor() {
   tcs.getRGB(&ambientColor[0], &ambientColor[1], &ambientColor[2]);
 
   return ambientColor[0] - ambientColor[2];
 }
+
 
 void readColor() {
 
@@ -118,9 +129,11 @@ void readColor() {
   //tcs.setInterrupt(true);  // turn off LED
 }
 
+
 bool colorSeesRed() {
   return ((r - colorDiff) > (b + COLOR_MARGIN));
 }
+
 
 bool colorSeesBlue() {
   return (b > ((r - colorDiff) + COLOR_MARGIN));
