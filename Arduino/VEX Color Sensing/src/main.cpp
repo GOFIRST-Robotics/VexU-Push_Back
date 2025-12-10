@@ -3,7 +3,7 @@
 
 
 int redPort = 2;
-int bluePort = 9;
+int bluePort = 3;
 
 int colorDiff = 0;
 
@@ -53,9 +53,9 @@ void loop() {
 /*
 * Initializes the FLORA TCS34725 color sensor. A4 and A5 MUST be used for the color sensor I/O
 */
-void initializeColorSensor(int redPort, int bluePort) {
+void initializeColorSensor(int redOutputPort, int bluePort) {
 
-  pinMode(redPort, OUTPUT);
+  pinMode(redOutputPort, OUTPUT);
   pinMode(bluePort, OUTPUT);
   
   if (tcs.begin()) {
