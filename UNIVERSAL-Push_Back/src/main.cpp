@@ -1,6 +1,13 @@
 #include "main.h"
 #include "lemlib/api.hpp"
 
+//BeamBreak
+pros::adi::DigitalIn BeamBreak('C');
+void BeamBreak() {
+    return BeamBreak.get_value();
+}
+
+
 //ADI Inputs
 pros::adi::DigitalIn robotSelect('A');
 int robotVar = 1; // 1 noah 2 aaron
