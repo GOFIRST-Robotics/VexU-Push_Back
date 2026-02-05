@@ -1,4 +1,4 @@
 #pragma once
 #include "main.h"
 
-void rightElims(void);
+void leftSKILLS(void);

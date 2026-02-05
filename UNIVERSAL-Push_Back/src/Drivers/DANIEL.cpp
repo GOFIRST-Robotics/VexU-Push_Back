@@ -1,6 +1,7 @@
 #include "main.h"
 
 void driverDANIEL() {
+    controller.print(0,0,"Driver - Fuckass");
     while(true) {
         int leftJoy = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
         int rightJoy = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);

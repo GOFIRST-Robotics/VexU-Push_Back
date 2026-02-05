@@ -289,7 +289,7 @@ struct MoveToPoseParams {
         bool forwards = true;
         /** how fast the robot will move around corners. Recommended value 2-15. 0 means use horizontalDrift set in
          * chassis class. 0 by default. */
-        float horizontalDrift = 0;
+        float horizontalDrift = 8;
         /** carrot point multiplier. value between 0 and 1. Higher values result in curvier movements. 0.6 by default */
         float lead = 0.6;
         /** the maximum speed the robot can travel at. Value between 0-127. 127 by default */

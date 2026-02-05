@@ -21,3 +21,16 @@ extern lemlib::ControllerSettings angular_controller;
 
 // create the chassis
 extern lemlib::Chassis chassis;
+
+
+//Autonomous Cardinal Direction Shortcuts
+
+extern int cardinalNORTH;
+extern int cardinalEAST;
+extern int cardinalSOUTH;
+extern int cardinalWEST;
+
+extern int cardinalNORTHEAST;
+extern int cardinalSOUTHEAST;
+extern int cardinalSOUTHWEST;
+extern int cardinalNORTHWEST;

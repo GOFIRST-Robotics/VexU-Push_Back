@@ -78,12 +78,15 @@ void opcontrol(void);
 #include "robotSubSystems/driveTrain.hpp"
 #include "robotSubSystems/intake.hpp"
 #include "robotSubSystems/drake.hpp"
+#include "robotSubSystems/scraper.hpp"
 
-#include "Autons/15inBLACK/leftQUALS.hpp"
-#include "Autons/15inBLACK/leftELIMS.hpp"
+#include "Autons/15inBLACK/leftSAFE.hpp"
+#include "Autons/15inBLACK/leftGOALRUSH.hpp"
+#include "Autons/15inBLACK/leftSKILLS.hpp"
 
-#include "Autons/24inMAROON/rightQUALS.hpp"
-#include "Autons/24inMAROON/rightELIMS.hpp"
+#include "Autons/24inMAROON/rightSAFE.hpp"
+#include "Autons/24inMAROON/rightGOALRUSH.hpp"
+#include "Autons/24inMAROON/rightSKILLS.hpp"
 
 #include "Drivers/AARON.hpp"
 #include "Drivers/NOAH.hpp"

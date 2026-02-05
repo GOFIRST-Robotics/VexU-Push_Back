@@ -1,7 +1,7 @@
 #include "main.h"
 
-int defaultAuto = 0;
-int selectedAuto = 0;
+int defaultAuto = 5;
+int selectedAuto = defaultAuto;
 pros::adi::DigitalIn autonSelectButton('B');
 
 void selector(int maxAutos) {

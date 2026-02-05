@@ -12,39 +12,39 @@ lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group
 
 
 // horizontal tracking wheel
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -1.906);
+//----lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -1.906);
 // vertical tracking wheel
-lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, -0.15);
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, 1.97, -0.15);
 
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel 1, set to null
                             nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs
-                            &horizontal_tracking_wheel, // horizontal tracking wheel 1
+                            nullptr, // horizontal tracking wheel 1
                             nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
                             &imu // inertial sensor
 );
 
 // lateral PID controller
-lemlib::ControllerSettings lateral_controller(6.7, // proportional gain (kP)
+lemlib::ControllerSettings lateral_controller(6, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              6, // derivative gain (kD) 4.5
-                                              10, // anti windup
-                                              1, // small error range, in inches
-                                              100, // small error range timeout, in milliseconds
+                                              3, // derivative gain (kD) 4.5
+                                              5, // anti windup
+                                              0.5, // small error range, in inches
+                                              200, // small error range timeout, in milliseconds
                                               2, // large error range, in inches
                                               500, // large error range timeout, in milliseconds
                                               20 // maximum acceleration (slew)
 );
 
 // angular PID controller
-lemlib::ControllerSettings angular_controller(1, // proportional gain (kP)
+lemlib::ControllerSettings angular_controller(1.5, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              2, // derivative gain (kD)
-                                              10, // anti windup
-                                              1, // small error range, in degrees
-                                              100, // small error range timeout, in milliseconds
-                                              3, // large error range, in degrees
-                                              100, // large error range timeout, in milliseconds
-                                              20 // maximum acceleration (slew)
+                                              10, // derivative gain (kD)
+                                              1.5, // anti windup
+                                              2.5, // small error range, in degrees
+                                              50, // small error range timeout, in milliseconds
+                                              5, // large error range, in degrees
+                                              300, // large error range timeout, in milliseconds
+                                              0 // maximum acceleration (slew)
 );
 
 // create the chassis
@@ -53,3 +53,17 @@ lemlib::Chassis chassis(drivetrain, // drivetrain settings
                         angular_controller, // angular PID settings
                         sensors // odometry sensors
 );
+
+
+
+//Autonomous Cardinal Direction Shortcuts
+
+int cardinalNORTH = 0;
+int cardinalEAST = 90;
+int cardinalSOUTH = 180;
+int cardinalWEST = 270;
+
+int cardinalNORTHEAST = 45;
+int cardinalSOUTHEAST = 135;
+int cardinalSOUTHWEST = 225;
+int cardinalNORTHWEST = 315;
