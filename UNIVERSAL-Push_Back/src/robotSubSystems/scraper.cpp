@@ -2,7 +2,7 @@
 
 //NOTE: TRUE IS DOWN, FALSE IS UP
 
-// Drake Shortcuts
+// Scraper Shortcuts
 void scraperDOWN() {
     scraperPiston.set_value(true);
 }

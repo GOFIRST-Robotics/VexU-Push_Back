@@ -61,12 +61,14 @@ void leftGoalRushMAIN() {
 
 
 void leftGoalRushSTAY() {
+    printToBoth("Running Left Rush Stay");
     leftGoalRushMAIN();
     
     chassis.moveToPoint(51,121,10000, {.forwards = false, .maxSpeed = 60});   //Stay at long goal
 }
 
-void leftSafeWING() {
+void leftGoalRushWING() {
+    printToBoth("Running Left Rush Wing");
     leftGoalRushMAIN();
     
 }

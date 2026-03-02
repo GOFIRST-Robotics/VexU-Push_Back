@@ -1,101 +1,133 @@
 #include "main.h"
 
-void leftSKILLS() {
-    chassis.setPose(10,87,0);
-
-    //---first score, matchloader, wall balls---///
-    chassis.moveToPoint(24, 120, 1500); // move to goal align
-    chassis.turnToPoint(15, 120, 500, {.forwards = false});
-    chassis.moveToPoint(50, 120, 2000, {.forwards = false, .maxSpeed = 100});   //Goal
-    chassis.waitUntilDone();
-    intakeScore();
-    pros::delay(1000);  //Score preload
-    intakeInFAST();
+void leftSKILLS() { //15
+    chassis.setPose(25,72, cardinalWEST);
     scraperDOWN();
+    intakeInFAST();
+    pros::delay(1000);
+    chassis.moveToPoint(48,72,2000, {.forwards = false, .maxSpeed = 50}, false);    //Pull out
+    pros::delay(750);
+    chassis.moveToPoint(42,72,2000, {.maxSpeed = 80}, false);    //Pull out
 
-    chassis.moveToPoint(10, 120, 6000, {.maxSpeed = 80}, false);   //Matchloader
+    scraperUP();
+    pros::delay(450);
+    chassis.moveToPoint(25,72,2000, {.maxSpeed = 40}, false);   //Done
+    chassis.turnToHeading(cardinalSOUTH, 750);
     intakeSTOP();
-    scraperUP();
-    chassis.moveToPoint(24, 120, 1000, {.forwards = false}); //Back away from matchloader
 
-    chassis.turnToPoint(24, 135, 1000); //Turn to wall blocks
-    chassis.moveToPoint(24, 135, 1000); //Move to wall blocks
-    chassis.waitUntil(8);
+    chassis.moveToPoint(24,13,3000, {.maxSpeed = 70}, false);  //Wall blocks
+    chassis.turnToHeading(cardinalSOUTH, 350);
     intakeInFAST();
-    chassis.waitUntilDone();
-    intakeInSLOW();
+    chassis.moveToPoint(24,8, 3000, {.maxSpeed = 40}, false);  //Wall blocks
 
-    chassis.swingToPoint(96, 130, DriveSide::LEFT, 2000, {.direction = AngularDirection::CW_CLOCKWISE}, false);
-    scraperDOWN();
-    pros::delay(500);
-    //--Ended with intakeInSLOW, scraperDOWN--//
-
-
-    //--Cross and align to goal--//
-    chassis.moveToPoint(96, 130, 3000, {.minSpeed = 70});    //Long cross movement
-    chassis.moveToPoint(120, 120, 1000);    //Move to goal align
-    chassis.turnToPoint(95, 120, 500, {.forwards = false});  //Turn to goal
-    //--Ended with intakeInSLOW, scraperDOWN--//
-
-
-    //--Score, matchload, wall blocks--//
-    chassis.moveToPoint(95, 120, 2000, {.forwards = false, .maxSpeed = 100}); //Goal scoring
-    chassis.waitUntilDone();
-    intakeScore();
-    pros::delay(5000);  //Score blocks
-    intakeInFAST();
-
-    chassis.moveToPoint(135, 120, 6000, {.maxSpeed = 80}, false);   //Matchloader
-    chassis.moveToPoint(95, 120, 2000, {.forwards = false, .maxSpeed = 100}); //Goal scoring
-    chassis.waitUntilDone();
-    intakeScore();
-    pros::delay(5000);  //Score blocks
-    intakeInFAST();
-    scraperUP();
-
-    chassis.moveToPoint(120, 120, 1000);    //Move away from goal
-
-    chassis.turnToPoint(120, 135, 500); // Turn to wall blocks
-    chassis.moveToPoint(120, 135, 1000);    //Move to wall blocks
     pros::delay(750);
-    //--Ended with intakeInFAST, scraperUP--//
+    chassis.moveToPoint(24, 52.5, 2000, {.forwards = false, .maxSpeed = 80});    //Back away
+    chassis.turnToHeading(cardinalEAST, 1000);  //Turn to mid ball
+    intakeSTOP();
 
+    chassis.moveToPoint(60, 52.5, 2000, {.maxSpeed = 80}, false); //Mid ball
+    scraperDOWN();
+    intakeInFAST();
+    pros::delay(350);
+    chassis.turnToHeading(cardinalEAST - 20, 750);
+    chassis.turnToHeading(cardinalEAST + 15, 750);
 
-    //--Scrape park zone--//
+    chassis.moveToPoint(84, 53, 2000, {.maxSpeed = 80}, false); //Low goal alignemnt
+    chassis.turnToHeading(cardinalSOUTHEAST+13, 1000);
+    chassis.moveToPoint(82, 58, 2000, {.forwards = false, .maxSpeed = 50}, false);   //Low goal 1
+    chassis.turnToHeading(cardinalSOUTHEAST, 250);
+
+    intakeScore();
+    pros::delay(2000);
+    intakeOutFAST();
+    pros::delay(150);
     intakeInSLOW();
-    chassis.moveToPoint(110, 72, 2000, {.forwards = false}); //Move to align park zone
-    chassis.turnToPoint(120, 72, 500);  //Turn to park zone
-    chassis.moveToPoint(120, 72, 2000, {.maxSpeed = 65}, false);   //Move to park zone
+    chassis.moveToPoint(89, 51, 2000, {.maxSpeed = 50}, false);   //Move away from goal
+    chassis.moveToPoint(83, 59, 2000, {.forwards = false, .maxSpeed = 50}, false);   //Low goal 2
+    intakeScore();
+    pros::delay(1000);
+    intakeOutFAST();
+    pros::delay(150);
+    intakeScore();
+    pros::delay(500);
+    intakeInFAST();
+
+    chassis.moveToPoint(117, 24, 3000, {.maxSpeed = 80}, false); //Align to goal
+    chassis.turnToHeading(cardinalEAST-10, 750);
+
+    chassis.moveToPoint(80, 24, 2000, {.forwards = false, .maxSpeed = 50, .minSpeed = 30}, false); //Goal align
+    chassis.tank(-50, -50);
+    pros::delay(350);
+    chassis.tank(0, 0);
     pros::delay(250);
-    scraperDOWN();
-    pros::delay(750);
-    chassis.moveToPoint(110, 72, 2000, {.forwards = false, .maxSpeed = 60}, false); //Move to align park zone
-    //--Ended with intakeInSLOW, scraperDOWN--//
+    chassis.setPose(102,24,cardinalEAST);
+    pros::delay(50);
+    /////////////////////////////////////////////////RESET
 
-    //--Grab last block and score middle goal--//
-    chassis.turnToPoint(75, 93, 1000, {.maxSpeed = 90});
-    intakeInFAST();
-    chassis.moveToPoint(75, 93, 2000);  //Go to mid
-    chassis.waitUntil(24);
+
+    chassis.moveToPoint(120,24, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 1
+    chassis.turnToHeading(cardinalEAST, 500, {.earlyExitRange = 2});
+    chassis.moveToPoint(140, 24, 2000, {.maxSpeed = 50, .minSpeed = 30}, false);  //Match Loader 1
+    intakeSTOP();
+
+    chassis.moveToPoint(120, 24, 2000, {.forwards = false, .maxSpeed = 70}, false); //Back away
+    chassis.turnToHeading(cardinalSOUTH, 750, {}, false);
+
+
+
     scraperUP();
-    chassis.waitUntilDone();
     pros::delay(500);
+    chassis.moveToPoint(120, 7, 2000, {.maxSpeed = 50}); //Pick up wall blocks
+    frontAndMidIntake.move_voltage(10000);
+    chassis.waitUntilDone();
+    pros::delay(350);
 
-    chassis.moveToPoint(86, 86, 2000, {.forwards = false, .maxSpeed = 90}); //Align to mid goal
-    chassis.turnToPoint(81, 81,1000);
-    chassis.moveToPoint(81, 81, 1000, {.maxSpeed = 60}, false);
-    intakeOutSLOW();
-    pros::delay(4000);  //Score mid goal
-    //--Ended intakeOUTSLOW, scraperUP--//
+    chassis.moveToPoint(120, 11, 2000, {.forwards = false, .maxSpeed = 70}, false); //Cross position
+    chassis.turnToHeading(cardinalWEST, 750);
+    frontAndMidIntake.move_voltage(4000);
 
 
-    //--Park--//
-    chassis.swingToPoint(96, 52, DriveSide::LEFT, 1000, {.direction = AngularDirection::CW_CLOCKWISE, .minSpeed = 80});
-    chassis.moveToPoint(96, 52, 1500, {.forwards = false}); //Move to far align point
 
-    chassis.moveToPoint(11, 52, 2000);  //Close align
+    chassis.moveToPoint(29, 9, 5000, {.maxSpeed = 80}, false); //Cross long
+    chassis.turnToHeading(cardinalNORTH, 750);
+
+
+
+    chassis.moveToPoint(29, 22, 4000, {.maxSpeed = 80}, false); //Align to goal
+    chassis.turnToHeading(cardinalWEST, 750);
+    scraperDOWN();
+    hoodUP();
+
+
+    chassis.moveToPoint(64, 22, 2000, {.forwards = false, .maxSpeed = 50, .minSpeed = 30}, false); //Goal 1
+
+    chassis.tank(-50, -50);
+    pros::delay(550);
+    chassis.tank(0, 0);
+    pros::delay(350);
+    chassis.setPose(42,24,cardinalWEST);
+    pros::delay(100);
     intakeScore();
-    chassis.turnToPoint(11, 67, 500);
-    chassis.moveToPoint(11, 67, 5000);  //Park
+    pros::delay(3500);
+    intakeInFAST();
+    /////////////////////////////////////////////////////////////RESET
+
+
+        
+    chassis.moveToPoint(24,25, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 2
+    chassis.turnToHeading(cardinalWEST, 500, {.earlyExitRange = 2});
+    chassis.moveToPoint(4, 25, 2500, {.maxSpeed = 40, .minSpeed = 30}, false);  //Match Loader 2
+    intakeSTOP();
+
+    chassis.moveToPoint(54, 24, 2000, {.forwards = false, .maxSpeed = 50, .minSpeed = 30}, false); //Goal 2
+    intakeScore();
+    scraperUP();
+    pros::delay(3500);
+    intakeInFAST();
+
+    chassis.moveToPoint(13, 44, 2000, {.maxSpeed = 80});   //Align to park
+    chassis.turnToHeading(cardinalNORTH - 10, 750);
+    chassis.moveToPoint(8, 60, 2000, {.maxSpeed = 80});   //Align to park
+
 
 }

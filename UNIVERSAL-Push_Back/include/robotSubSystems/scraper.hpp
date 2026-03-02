@@ -2,6 +2,6 @@
 #include "main.h"
 
 
-// Autonomous Drake Shortcuts
-void scraperUP(void);
+// Scraper Shortcuts
 void scraperDOWN(void);
+void scraperUP(void);

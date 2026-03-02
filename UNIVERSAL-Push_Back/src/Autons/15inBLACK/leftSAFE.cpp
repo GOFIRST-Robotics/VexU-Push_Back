@@ -2,71 +2,75 @@
 
 
 void leftSafeMAIN() {
-    chassis.setPose(24.5,87.55,90);
-
-    chassis.moveToPoint(54,92,1000, {.maxSpeed = 100});  //Align to mid goal
-
-    chassis.turnToHeading(cardinalNORTHWEST,750, {.maxSpeed = 80});
-    chassis.moveToPoint(61,84,1000, {.forwards = false, .maxSpeed = 85});  //move to mid goal
-
-    chassis.waitUntilDone();
+    chassis.setPose(24.5,87.5,cardinalWEST);
+    chassis.moveToPoint(53,87, 1000, {.forwards = false, .maxSpeed = 100});    //Align to mid goal
+    chassis.turnToHeading(cardinalNORTHWEST, 300);
+    chassis.moveToPoint(59,84, 700, {.forwards = false, .maxSpeed = 127}); //Mid goal
     intakeScore();
-    pros::delay(1000);
+    chassis.waitUntilDone();
+    pros::delay(450);
     intakeSTOP();
 
 
-    chassis.moveToPoint(28,121,3000);  //Long movement to middle goal
-    chassis.waitUntilDone();
-    pros::delay(250);
-
-    chassis.turnToHeading(cardinalWEST,1000);   //Turn to matchloader
+    chassis.moveToPoint(26,118, 2000, {.maxSpeed = 100}); //Long movement
+    hoodUP();
+    chassis.turnToHeading(cardinalWEST-6, 1000);    //turn to match loader
     scraperDOWN();
     intakeInFAST();
-    chassis.moveToPoint(7,121,1500, {.maxSpeed = 75});  //Matchload 1
-    chassis.waitUntilDone();
-    pros::delay(700);
+
+
+    chassis.moveToPoint(20,119, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 1
+    chassis.turnToHeading(cardinalWEST, 500, {.earlyExitRange = 2});
+    chassis.moveToPoint(11, 119, 1500, {.maxSpeed = 40, .minSpeed = 30}, false);  //Match Loader 1
+    holdUntilBlockPresent(3000, 500, false);
+    pros::delay(500);
     intakeSTOP();
-
-
-    //--Half Measure--//
-    chassis.moveToPoint(24,121,1500, {.forwards = false, .maxSpeed = 90});   //Half Measure
-    chassis.turnToHeading(cardinalNORTHWEST, 500);   //Remove bad
-    chassis.waitUntilDone();
     scraperUP();
+
+
+    chassis.moveToPoint(30, 120, 1500, {.forwards = false, .maxSpeed = 80, .minSpeed = 40}, false);   //half measure
+    chassis.turnToHeading(cardinalSOUTHWEST, 600, {}, false);
     intakeOutFAST();
-    pros::delay(300);
+    pros::delay(250);
     intakeSTOP();
-    chassis.turnToHeading(cardinalWEST, 500);    //Turn to goal
-    //--End half measure--//
+    chassis.turnToHeading(cardinalWEST+7, 600);
 
 
-    chassis.moveToPoint(51,121,1500, {.forwards = false, .maxSpeed = 90});   //Long goal
-    chassis.waitUntilDone();
+    chassis.moveToPoint(50, 120, 1000, {.forwards = false, .maxSpeed = 60, .minSpeed = 40}, false);   //Goal 1
     intakeScore();
     scraperDOWN();
-    pros::delay(2500);
-
-    chassis.moveToPoint(7,121,2000, {.maxSpeed = 75});  //Matchload 2
+    holdUntilBlockRemoved(3000, 500, false);
     intakeInFAST();
-    chassis.waitUntilDone();
-    pros::delay(3000);
+
+
+    chassis.moveToPoint(20,120, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 2
+    chassis.turnToHeading(cardinalWEST, 500, {.earlyExitRange = 2});
+    chassis.moveToPoint(11, 120, 2000, {.maxSpeed = 50, .minSpeed = 30}, false);  //Match Loader 2
+    pros::delay(1500);
     intakeSTOP();
 
-    chassis.moveToPoint(51,121,2000, {.forwards = false, .maxSpeed = 60});   //Long goal 2
-    chassis.waitUntilDone();
+
+    chassis.moveToPoint(50,120, 1500, {.forwards = false, .maxSpeed = 60, .minSpeed = 40}, false);   //Goal 2
     intakeScore();
-    pros::delay(2500);
     scraperUP();
+    holdUntilBlockRemoved(2000, 500, false);
 }
 
 
 void leftSafeSTAY() {
+    printToBoth("Running Left Safe Stay");
     leftSafeMAIN();
     
-    chassis.moveToPoint(51,121,10000, {.forwards = false, .maxSpeed = 60});   //Stay at long goal
+    chassis.moveToPoint(53,119,10000, {.forwards = false, .maxSpeed = 90});   //Long goal 2
 }
 
 void leftSafeWING() {
+    printToBoth("Running Left Safe Wing");
     leftSafeMAIN();
     
+    intakeSTOP();
+    chassis.moveToPoint(37, 110, 1250);   //back away
+    chassis.turnToHeading(cardinalWEST, 500);
+    chassis.moveToPoint(60, 111, 10000, {.forwards = false, .earlyExitRange = 0});   //Drake
+    drakeDOWN();
 }

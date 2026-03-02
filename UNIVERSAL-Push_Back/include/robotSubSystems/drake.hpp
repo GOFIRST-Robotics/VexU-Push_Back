@@ -2,6 +2,6 @@
 #include "main.h"
 
 
-// Autonomous Drake Shortcuts
-void drakeUP(void);
+// Drake Shortcuts
 void drakeDOWN(void);
+void drakeUP(void);

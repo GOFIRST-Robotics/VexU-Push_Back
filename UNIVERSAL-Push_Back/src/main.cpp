@@ -3,48 +3,15 @@
 #include <iostream>
 #include <tuple>
 #include <list>
+#include <string>
 
+//User Variables
+int maxAutos = 4;
 
-void debugAuto15() {
-   // chassis.setPose(24.5,87.55,90);
-
-}
-
-void debugAuto24() {
-
-    chassis.setPose(0,0,0);
-  //  chassis.moveToPoint(0, 48, 10000, {.maxSpeed = 100});
- //   pros::delay(100);
-   // chassis.turnToHeading(180,5000);
-//pros::delay(100);
-   // chassis.moveToPoint(0, 0, 10000);
-
-while (true) {
-        pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
-    pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
-    pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
-    pros::delay(50);
-}
-    
-
-}
-
-//cardinalNORTHEAST
 
 //ADI Inputs
 pros::adi::DigitalIn robotSelectPort('A');
-int robotVar = 2; // 1 aaron 2 noah
-
-int maxAutos = 5;
-
-
-// Tasks
-void printOdom() {
-    pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
-    pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
-    pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
-    pros::delay(50);
-}
+int robotVar = 2; // 1 noah 2 aaron
 
 
 
@@ -65,16 +32,18 @@ void initialize() {
     if (robotSelectPort.get_value()) {robotVar = 1;}   // Tag in 15in bot
 
 
+    //Driver confirmation
     if (robotVar == 0) {   // Daniel
         controller.print(0,0,"Welcome, Fuckass");
     }
     else if (robotVar == 1) {   // Aaron
         controller.print(0,0,"Welcome, Aaron");
+        intakeReverseVar = -1;
     }
     else if (robotVar == 2) {   // Noah
         controller.print(0,0,"Welcome, Noah");
     }
-
+    pros::delay(750);  //Block to confirm driver
 }
 
 /**
@@ -101,10 +70,10 @@ void competition_initialize() {
         selectedAuto = 100; // SKILLS
         switch(robotVar) {
             case 1: // 15in LEFT
-                pros::lcd::set_text(0, "15in SKILLS");
+                printToBoth("15in SKILLS");
                 break;
             case 2: // 24in RIGHT
-                pros::lcd::set_text(0, "24in SKILLS");
+                printToBoth("24in SKILLS");
                 break;
         }
     }
@@ -114,20 +83,20 @@ void competition_initialize() {
             selector(maxAutos+1);
             switch(robotVar) {
                 case 1: // 15in LEFT
-                    if (selectedAuto == 0) {pros::lcd::set_text(0, "DO NOTHING");}
-                    else if (selectedAuto == 1) {pros::lcd::set_text(0, "15in SAFE STAY");}
-                    else if (selectedAuto == 2) {pros::lcd::set_text(0, "15in SAFE WING");}
-                    else if (selectedAuto == 3) {pros::lcd::set_text(0, "15in GOALRUSH STAY");}
-                    else if (selectedAuto == 4) {pros::lcd::set_text(0, "15in GOALRUSH WING");}
-                    else {pros::lcd::set_text(0, "Unknown Auto");}
+                    if (selectedAuto == 0) {printToBoth("DO NOTHING");}
+                    else if (selectedAuto == 1) {printToBoth("15in SAFE STAY");}
+                    else if (selectedAuto == 2) {printToBoth("15in SAFE WING");}
+                    else if (selectedAuto == 3) {printToBoth("15in GOALRUSH STAY");}
+                    else if (selectedAuto == 4) {printToBoth("15in GOALRUSH WING");}
+                    else {printToBoth("Unknown Auto");}
                     break;
                 case 2: // 24in RIGHT
-                    if (selectedAuto == 0) {pros::lcd::set_text(0, "DO NOTHING");}
-                    else if (selectedAuto == 1) {pros::lcd::set_text(0, "24in SAFE STAY");}
-                    else if (selectedAuto == 2) {pros::lcd::set_text(0, "24in SAFE WING");}
-                    else if (selectedAuto == 3) {pros::lcd::set_text(0, "24in GOALRUSH STAY");}
-                    else if (selectedAuto == 4) {pros::lcd::set_text(0, "24in GOALRUSH WING");}
-                    else {pros::lcd::set_text(0, "Unknown Auto");}
+                    if (selectedAuto == 0) {printToBoth("DO NOTHING");}
+                    else if (selectedAuto == 1) {printToBoth("24in SAFE STAY");}
+                    else if (selectedAuto == 2) {printToBoth("24in SAFE WING");}
+                    else if (selectedAuto == 3) {printToBoth("24in MixUp STAY");}
+                    else if (selectedAuto == 4) {printToBoth("24in MixUp WING");}
+                    else {printToBoth("Unknown Auto");}
                     break;
             }
             pros::delay(10);
@@ -150,7 +119,7 @@ void competition_initialize() {
 void autonomous() {
     pros::lcd::set_text(4, "Autonomous");
     controller.clear_line(0);
-    pros::Task printOdomTask(printOdom);
+    drakeUP();
 
     if (selectedAuto == 100) {  //Skills
         switch(robotVar) {
@@ -168,17 +137,15 @@ void autonomous() {
                 if (selectedAuto == 0) {}
                 else if (selectedAuto == 1) {leftSafeSTAY();}
                 else if (selectedAuto == 2) {leftSafeWING();}
-                else if (selectedAuto == 3) {}
-                else if (selectedAuto == 4) {}
-                else if (selectedAuto == 5) {debugAuto15();}
+                else if (selectedAuto == 3) {leftGoalRushSTAY();}
+                else if (selectedAuto == 4) {leftGoalRushWING();}
                 break;
             case 2: // 24in RIGHT
                 if (selectedAuto == 0) {}
                 else if (selectedAuto == 1) {rightSafeSTAY();}
                 else if (selectedAuto == 2) {rightSafeWING();}
-                else if (selectedAuto == 3) {}
-                else if (selectedAuto == 4) {}
-                else if (selectedAuto == 5) {debugAuto24();}
+                else if (selectedAuto == 3) {rightMixUpSTAY();}
+                else if (selectedAuto == 4) {rightMixUpWING();}
                 break;
         }
     }
@@ -198,26 +165,29 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol1() {
-    pros::lcd::set_text(4, "opControl");
-    //pros::Task colorSortTask(colorSort);
-    if (robotVar == 0) {   // Daniel
-        driverDANIEL();
-    }
-
-    else if (robotVar == 1) {   // Aaron
-        driverAARON();
-    }
-
-    else if (robotVar == 2) {   // Noah
-        driverNOAH();
-    }
-}
-
-
 void opcontrol() {
-    debugAuto24();
+    pros::lcd::set_text(4, "opControl");
+    if (robotVar == 0) {driverDANIEL();}   // Daniel
+    else if (robotVar == 1) {driverAARON();}   // Noah
+    else if (robotVar == 2) {driverNOAH();}   // Aaron
 }
 
 
+void opcontrol1() {
+    rightSafeWING();
 
+
+
+
+
+
+
+    while(true) {
+        pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
+        pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
+        pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
+        pros::delay(50);
+    }
+    pros::delay(50);
+
+}

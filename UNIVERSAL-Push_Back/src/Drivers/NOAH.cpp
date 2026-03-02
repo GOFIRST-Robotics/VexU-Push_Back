@@ -11,20 +11,11 @@ void driverNOAH() {
         /*
         * ------- intake stuff -------  
         */
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {     // Color sort
-            mainIntake.move_voltage(12000);
-            indexerIntake.move_voltage(-12000);
-            scoringIntake.move_voltage(0);
-        }
-        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {    // Main Intake
-            if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {    // Both buttons to score
-                intakeScore();
-            }
+        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {    // Main Intake
+            if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {intakeScore(); }    // Both buttons to score
             else {intakeInFAST(); } // Normal Intake
         }
-        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {   // Outtake
-            intakeOutSLOW();
-        }
+        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {intakeOutSLOW(); }   // Outtake
         else {intakeSTOP(); }
 
 
@@ -48,6 +39,7 @@ void driverNOAH() {
         else {
             drakeUP();
         }
+
         
         pros::delay(10);
     }

@@ -34,3 +34,5 @@ extern int cardinalNORTHEAST;
 extern int cardinalSOUTHEAST;
 extern int cardinalSOUTHWEST;
 extern int cardinalNORTHWEST;
+
+void moveToPark(int x = 8, int y = 72, int timeout = 3000, float maxSpeed = 100);
