@@ -6,7 +6,7 @@
 #include <string>
 
 //User Variables
-int maxAutos = 4;
+int maxAutos = 2;
 
 
 //ADI Inputs

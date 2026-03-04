@@ -1,6 +1,6 @@
 #include "main.h"
 
-int defaultAuto = 100;
+int defaultAuto = 2;
 int selectedAuto = defaultAuto;
 pros::adi::DigitalIn autonSelectButton('B');
 
