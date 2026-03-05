@@ -4,6 +4,8 @@ void rightSKILLS() {  //24 in
 chassis.setPose(24,88,cardinalSOUTH);
 intakeInFAST();
 pros::delay(500);
+drakeUP();
+
 
 chassis.moveToPoint(24, 120, 1000, {.forwards = false, .maxSpeed = 80});
 
@@ -76,7 +78,6 @@ intakeScore();
 pros::delay(2000);
 intakeInFAST();
 ////////////////////////////////////////////////////////////////////////////////////////////////PHASE 2 COMPLETE
-
 chassis.moveToPoint(120,119, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 2
 chassis.turnToHeading(cardinalEAST, 500, {.earlyExitRange = 2});
 chassis.moveToPoint(140, 119, 2500, {.maxSpeed = 50, .minSpeed = 30}, false);  //Match Loader 2
@@ -92,12 +93,12 @@ intakeScore();
 pros::delay(2000);
 intakeInFAST();
 
-chassis.moveToPoint(112, 72.5, 2000, {.maxSpeed = 80});   //Align to scrape
+chassis.moveToPoint(112, 73, 2000, {.maxSpeed = 80});   //Align to scrape
 intakeSTOP();
 
 chassis.turnToHeading(cardinalEAST, 750);
-chassis.moveToPoint(122, 72.5, 1000, {.maxSpeed = 50}, false);    //Scrape
-chassis.moveToPoint(125, 72.5, 500, {.maxSpeed = 20}, false);    //Scrape
+chassis.moveToPoint(122, 73, 1000, {.maxSpeed = 50}, false);    //Scrape
+chassis.moveToPoint(125, 73, 500, {.maxSpeed = 20}, false);    //Scrape
 
 scraperDOWN();
 pros::delay(750);
@@ -134,30 +135,23 @@ pros::delay(1500);
 intakeInFAST();
 pros::delay(550);
 intakeOutSLOW();
-pros::delay(1500);
-intakeInFAST();
-pros::delay(550);
-intakeOutSuperSLOW();
 pros::delay(500);
 
 chassis.moveToPoint(95,100, 3000, {.forwards = false, .maxSpeed = 80});    //goal back away
 chassis.turnToHeading(cardinalWEST, 750);
 intakeInSLOW();
-chassis.moveToPoint(12, 100, 3000, {.maxSpeed = 80});   //Move to park position
-chassis.turnToHeading(cardinalSOUTH, 750);
+chassis.moveToPoint(11, 100, 2000, {.maxSpeed = 70});   //Move to park position
+chassis.turnToHeading(cardinalSOUTH+13, 750);
 
 
-moveToPark(6.5,72,1000, 80);
-pros::delay(300);
+chassis.moveToPoint(6.5,72,1400, {.maxSpeed = 70});
+chassis.waitUntilDone();
 chassis.tank(-50, -50); //Full speed back
-pros::delay(50);
-while (imu.get_roll() <7) {  //While on flat surface
-    pros::delay(10);
-}
+pros::delay(595);
+
 chassis.tank(10, 10); //Stop once tilting to correct angle
 pros::delay(100);
 chassis.tank(0, 0); //Stop once tilting to correct angle
-
 
 
     while(true) {

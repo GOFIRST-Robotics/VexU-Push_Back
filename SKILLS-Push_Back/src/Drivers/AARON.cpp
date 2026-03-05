@@ -43,7 +43,7 @@ void driverAARON() {
         /*
         * ------- hood stuff -------  
         */
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
             hoodDOWN();
         }
         else {

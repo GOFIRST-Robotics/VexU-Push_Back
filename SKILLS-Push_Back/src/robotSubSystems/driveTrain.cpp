@@ -77,7 +77,7 @@ void moveToPark(int x, int y, int timeout, float maxSpeed) {
     }
     chassis.cancelMotion(); //Cancel motion once on park zone
 
-    chassis.tank(127, 127); //Full speed ahead
+    chassis.tank(80, 80); //Full speed ahead
     while (imu.get_roll() < zeroIMU+1) {  //While not on flat surface
         pros::delay(10);
     }

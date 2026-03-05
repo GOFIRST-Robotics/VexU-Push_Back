@@ -20,6 +20,8 @@ void leftSKILLS() { //15
     chassis.moveToPoint(24,8, 3000, {.maxSpeed = 40}, false);  //Wall blocks
 
     pros::delay(750);
+    drakeUP();
+
     chassis.moveToPoint(24, 52.5, 2000, {.forwards = false, .maxSpeed = 80});    //Back away
     chassis.turnToHeading(cardinalEAST, 1000);  //Turn to mid ball
     intakeSTOP();
@@ -39,14 +41,14 @@ void leftSKILLS() { //15
     intakeScore();
     pros::delay(1000);
     intakeOutFAST();
-    pros::delay(50);
+    pros::delay(100);
     intakeInSLOW();
     chassis.moveToPoint(92, 51.5, 2000, {.maxSpeed = 50}, false);   //Move away from goal
     chassis.moveToPoint(85, 58.5, 1000, {.forwards = false, .maxSpeed = 50}, false);   //Low goal 2
     intakeScoreSLOW();
     pros::delay(2000);
     intakeOutFAST();
-    pros::delay(75);
+    pros::delay(100);
     intakeScore();
     pros::delay(1500);
     intakeSTOP();
@@ -55,7 +57,7 @@ void leftSKILLS() { //15
     hoodUP();
     chassis.turnToHeading(cardinalEAST-10, 750);
 
-    chassis.moveToPoint(80, 24.5, 1000, {.forwards = false, .maxSpeed = 60, .minSpeed = 30}, false); //Goal align 1
+    chassis.moveToPoint(80, 24, 1000, {.forwards = false, .maxSpeed = 60, .minSpeed = 30}, false); //Goal align 1
     chassis.tank(-100, -100);
     pros::delay(1000);
     chassis.tank(0, 0);
@@ -95,7 +97,7 @@ void leftSKILLS() { //15
     chassis.turnToHeading(cardinalSOUTHEAST, 750);  //turn to low goal 3
     hoodDOWN();
 
-    chassis.moveToPoint(87.5, 58, 2000, {.forwards = false, .maxSpeed = 80}, false);   //Low goal 3
+    chassis.moveToPoint(87, 58, 2000, {.forwards = false, .maxSpeed = 80}, false);   //Low goal 3
     intakeScoreSLOW();
     pros::delay(900);
     intakeInSLOW();
@@ -131,7 +133,7 @@ void leftSKILLS() { //15
     intakeScore();
     pros::delay(1500);
     intakeOutFAST();
-    pros::delay(100);
+    pros::delay(150);
     intakeScore();
     pros::delay(2000);
     intakeInFAST();

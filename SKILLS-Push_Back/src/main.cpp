@@ -78,7 +78,6 @@ void competition_initialize() {
 void autonomous() {
     pros::lcd::set_text(4, "Autonomous");
     controller.clear_line(0);
-    drakeUP();
     switch(robotVar) {
         case 1: // 15in LEFT
             leftSKILLS();
