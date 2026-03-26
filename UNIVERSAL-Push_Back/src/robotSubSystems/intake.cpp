@@ -97,6 +97,12 @@ void intakeSTOP() {
     scoringIntake.move_voltage(-4000 * intakeReverseVar);
 }
 
+void intakeFULLSTOP() {
+    frontAndMidIntake.move_voltage(0);
+    mainIntake.move_voltage(0 * intakeReverseVar);
+    scoringIntake.move_voltage(0 * intakeReverseVar);
+}
+
 void intakeInFIRSTSTAGE(int multiplier) {
     frontAndMidIntake.move_voltage(12000 * multiplier);
 }

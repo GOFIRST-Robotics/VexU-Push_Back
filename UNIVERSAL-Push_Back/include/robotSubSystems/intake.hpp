@@ -20,5 +20,6 @@ void intakeCustomSpeed(int multiplier);
 void intakeScore(void);
 void intakeScoreSLOW(void);
 void intakeSTOP(void);
+void intakeFULLSTOP(void);
 
 void intakeInFIRSTSTAGE(int multiplier);
