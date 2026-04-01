@@ -80,6 +80,7 @@ void opcontrol(void);
 #include "robotSubSystems/drake.hpp"
 #include "robotSubSystems/scraper.hpp"
 #include "robotSubSystems/hood.hpp"
+#include "robotSubSystems/smartAligner.hpp"
 
 #include "Autons/15inBLACK/leftSAFE.hpp"
 #include "Autons/15inBLACK/leftGOALRUSH.hpp"
