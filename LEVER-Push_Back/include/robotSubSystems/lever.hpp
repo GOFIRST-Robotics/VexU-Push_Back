@@ -2,5 +2,10 @@
 #include "main.h"
 
 
-extern pros::MotorGroup leverMotors;
-void getLeverPosition(void);
+extern pros::Motor leverMotorLeft;
+extern pros::Motor leverMotorRight;
+
+
+
+void initLever();
+int getLeverPosition(void);

@@ -101,7 +101,8 @@ void opcontrol() {
     pros::lcd::set_text(4, "opControl");
     //driverNOAH();
 
-    leverMotors.tare_position();
+    initLever();
+    pros::delay(100);
     while(true) {
         getLeverPosition();
         pros::delay(10);
