@@ -103,10 +103,9 @@ void opcontrol() {
 
     initLever();
     pros::delay(100);
-    while(true) {
-        getLeverPosition();
-        pros::delay(10);
-    }
+    leverUpBlocking();
+    pros::lcd::set_text(4, "Unblocked");
+
 }
 
 
