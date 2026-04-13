@@ -1,4 +1,5 @@
 #pragma once
 #include "main.h"
 
-void driverNOAH(void);
+void leftStandard(void);
+

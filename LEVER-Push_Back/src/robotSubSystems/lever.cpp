@@ -16,11 +16,11 @@ void initLever() {
     pros::delay(25);
 
 
-    pros::Task leverDriver{[=] {
+    pros::Task leverDriver{[=] {    //Lambda Task, acts at the "motor" for the lever
         while(true) {
             moveLever(leverTarget);
             pros::delay(10);
-            pros::lcd::set_text(5, std::to_string(getLeverPosition()) + ", " + std::to_string(leverMotorLeft.get_position()) + ", " + std::to_string(leverMotorRight.get_position()));
+            pros::lcd::set_text(5, "Lever Pos: " + std::to_string(getLeverPosition()) + ", L Mot: " + std::to_string((int) leverMotorLeft.get_position()) + ", R Mot: " + std::to_string((int) leverMotorRight.get_position()));
         }
     }};
 }
@@ -29,8 +29,8 @@ int getLeverPosition() {
     int leftMotorPos = leverMotorLeft.get_position();
     int rightMotorPos = leverMotorRight.get_position();
 
-
-    if (useLeftMotor == 0 || leftMotorPos > 720 || leftMotorPos < -90) {
+    //Motors need to be disabled if disconnected to avoid breaking the average position
+    if (useLeftMotor == 0 || leftMotorPos > 720 || leftMotorPos < -90) {    //Perma disable motor if disconnected or freespinning
         leftMotorPos = 0;
         useLeftMotor = 0;
     }
@@ -40,13 +40,13 @@ int getLeverPosition() {
         useRightMotor = 0;
     }
 
-    int avg = (leftMotorPos + rightMotorPos) / (useLeftMotor + useRightMotor);
+    int avg = (leftMotorPos + rightMotorPos) / (useLeftMotor + useRightMotor);  //Average if both motors working, otherwise only return working motor
     return avg;
 }
 
 
 
-const int leverMaxAngle = 360;
+const int leverMaxAngle = 320;
 const int leverMinAngle = 0;
 
 
@@ -57,7 +57,7 @@ void moveLever(int target) {
 
     int pos = getLeverPosition();
     float power = 0;
-    float kP = 0.002;
+    float kP = 0.01;
 
     power = kP * (target - pos);
     leverMotorLeft.move_voltage(12000 * power);
@@ -65,25 +65,29 @@ void moveLever(int target) {
 }
 
 
-void leverUp() {
-    leverTarget = leverMaxAngle;
-}
+void leverUp() {leverTarget = leverMaxAngle;}
 
-void leverDown() {
-    leverTarget = leverMinAngle;
-}
+void leverDown() {leverTarget = leverMinAngle;}
 
+
+
+
+//Autonomous Shortcuts
 void leverUpBlocking() {
+    backFlapOPEN();
     leverTarget = leverMaxAngle;
     int startTime = pros::millis();
     while ((abs(leverTarget - getLeverPosition()) > 25) && (pros::millis() < startTime + 2000)) {
         pros::delay(10);
     }
     leverTarget = leverMinAngle;
+    pros::delay(250);
+    backFlapCLOSE();
 }
 
 
-void leverScoreAmount(int blocks) {
+void leverScoreAmountBlocking(int blocks) {
+    backFlapOPEN();
     if (blocks < 1) {blocks = 1;}
     if (blocks > 6) {blocks = 6;}
     leverTarget = (leverMaxAngle/6) * blocks;
@@ -92,4 +96,6 @@ void leverScoreAmount(int blocks) {
         pros::delay(10);
     }
     leverTarget = leverMinAngle;
+    pros::delay(250);
+    backFlapCLOSE();
 }

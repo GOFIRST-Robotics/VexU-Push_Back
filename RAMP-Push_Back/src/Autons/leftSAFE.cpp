@@ -1,7 +1,10 @@
 #include "main.h"
 
 
-void leftSafeMAIN() {
+void leftStandard() {
+    printToBoth("Running Left Standard");
+
+
     chassis.setPose(24.5,87.5,cardinalWEST);
     chassis.moveToPoint(53,86, 1000, {.forwards = false, .maxSpeed = 90});    //Align to mid goal
     chassis.turnToHeading(cardinalNORTHWEST, 300);
@@ -36,7 +39,8 @@ void leftSafeMAIN() {
     chassis.turnToHeading(cardinalWEST+7, 600);
 
 
-    chassis.moveToPoint(50, 120, 1000, {.forwards = false, .maxSpeed = 60, .minSpeed = 40}, false);   //Goal 1
+    //chassis.moveToPoint(50, 120, 1000, {.forwards = false, .maxSpeed = 60, .minSpeed = 40}, false);   //Goal 1
+    moveToAlignerReset(60, 120, 42, 120, cardinalWEST, 2000);   //Reset Goal 1
     intakeScore();
     scraperDOWN();
     holdUntilBlockRemoved(2000, 500, false);
@@ -53,7 +57,8 @@ void leftSafeMAIN() {
     intakeSTOP();
 
 
-    chassis.moveToPoint(50,120, 1500, {.forwards = false, .maxSpeed = 60, .minSpeed = 40}, false);   //Goal 2
+    //chassis.moveToPoint(50,120, 1500, {.forwards = false, .maxSpeed = 60, .minSpeed = 40}, false);   //Goal 2
+    moveToAlignerReset(60, 120, 42, 120, cardinalWEST, 2000);   //Reset Goal 2
     intakeScore();
     scraperUP();
     holdUntilBlockRemoved(1000, 500, false);    //Score with unjam
@@ -61,25 +66,16 @@ void leftSafeMAIN() {
     pros::delay(100);
     intakeScore();
     pros::delay(1000);
-    intakeInFAST();
-}
 
 
-void leftSafeSTAY() {
-    printToBoth("Running Left Safe Stay");
-    leftSafeMAIN();
-    
-    chassis.moveToPoint(53,119,10000, {.forwards = false, .maxSpeed = 90});   //Long goal 2
-}
-
-void leftSafeWING() {
-    printToBoth("Running Left Safe Wing");
-    leftSafeMAIN();
-    
     intakeSTOP();
     chassis.moveToPoint(37, 109.5, 1250);   //back away
     chassis.turnToHeading(cardinalWEST, 500);
+    
+    waitUntilTime();    //Wait to Drake
     chassis.moveToPoint(59, 110.5, 1000, {.forwards = false, .earlyExitRange = 0});   //Drake
     drakeDOWN();
     chassis.tank(-5, -5); //low speed back
 }
+
+

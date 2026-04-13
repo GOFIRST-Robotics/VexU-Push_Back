@@ -5,5 +5,9 @@ void printToBoth(const std::string& input);
 
 void printOdom(void);
 
-void debugAuto15(void);
-void debugAuto24(void);
+
+void debugAuto(void);
+
+bool isLeftLCDPressed(void);
+bool isCenterLCDPressed(void);
+bool isRightLCDPressed(void);

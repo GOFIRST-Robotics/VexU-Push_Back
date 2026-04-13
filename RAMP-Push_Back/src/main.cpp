@@ -5,15 +5,6 @@
 #include <list>
 #include <string>
 
-//User Variables
-int maxAutos = 2;
-
-
-//ADI Inputs
-pros::adi::DigitalIn robotSelectPort('A');
-int robotVar = 2; // 1 noah 2 aaron
-
-
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -23,27 +14,10 @@ int robotVar = 2; // 1 noah 2 aaron
  */
 void initialize() {
     pros::lcd::initialize(); // initialize brain screen
-    pros::lcd::set_text(4, "Initialize");
+    pros::lcd::set_text(0, "Initialize");
     chassis.calibrate(); // calibrate sensors
     pros::delay(250);
-    
-    
-    //Setting robot
-    if (robotSelectPort.get_value()) {robotVar = 1;}   // Tag in 15in bot
-
-
-    //Driver confirmation
-    if (robotVar == 0) {   // Daniel
-        controller.print(0,0,"Welcome, Fuckass");
-    }
-    else if (robotVar == 1) {   // Aaron
-        controller.print(0,0,"Welcome, Aaron");
-        intakeReverseVar = -1;
-    }
-    else if (robotVar == 2) {   // Noah
-        controller.print(0,0,"Welcome, Noah");
-    }
-    pros::delay(750);  //Block to confirm driver
+    initSelector(2, 2); //Initalize seleector with default auto and amount of autos
 }
 
 /**
@@ -65,43 +39,19 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
-    pros::lcd::set_text(4, "Competition Initialize");
-    if (autonSelectButton.get_value()) {    // Skills starts with button pressed
-        selectedAuto = 100; // SKILLS
-        switch(robotVar) {
-            case 1: // 15in LEFT
-                printToBoth("15in SKILLS");
-                break;
-            case 2: // 24in RIGHT
-                printToBoth("24in SKILLS");
-                break;
-        }
+    pros::lcd::set_text(0, "Competition Initialize");
+    
+    while(true) {
+        timerSelect();
+        selector();
+        if (getSelectedAuto() == 0) {printToBoth("DO NOTHING");}
+        else if (getSelectedAuto() == 1) {printToBoth("Ramp STANDARD");}
+        else if (getSelectedAuto() == 2) {printToBoth("Ramp 4Low 6Long");}
+        //else if (getSelectedAuto() == 3) {printToBoth("Ramp MixUp STAY");}
+        //else if (getSelectedAuto() == 4) {printToBoth("Ramp MixUp WING");}
+        else {printToBoth("Unknown Auto");}
     }
-
-    else {  // Normal select
-        while(true) {
-            selector(maxAutos+1);
-            switch(robotVar) {
-                case 1: // 15in LEFT
-                    if (selectedAuto == 0) {printToBoth("DO NOTHING");}
-                    else if (selectedAuto == 1) {printToBoth("15in SAFE STAY");}
-                    else if (selectedAuto == 2) {printToBoth("15in SAFE WING");}
-                    else if (selectedAuto == 3) {printToBoth("15in GOALRUSH STAY");}
-                    else if (selectedAuto == 4) {printToBoth("15in GOALRUSH WING");}
-                    else {printToBoth("Unknown Auto");}
-                    break;
-                case 2: // 24in RIGHT
-                    if (selectedAuto == 0) {printToBoth("DO NOTHING");}
-                    else if (selectedAuto == 1) {printToBoth("24in SAFE STAY");}
-                    else if (selectedAuto == 2) {printToBoth("24in SAFE WING");}
-                    else if (selectedAuto == 3) {printToBoth("24in MixUp STAY");}
-                    else if (selectedAuto == 4) {printToBoth("24in MixUp WING");}
-                    else {printToBoth("Unknown Auto");}
-                    break;
-            }
-            pros::delay(10);
-        }
-    }
+    pros::delay(10);
 }
 
 
@@ -117,38 +67,17 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-    pros::lcd::set_text(4, "Autonomous");
+    pros::lcd::set_text(0, "Autonomous");
     controller.clear_line(0);
+    startTimer();
     drakeUP();
+    debugAuto();
 
-    if (selectedAuto == 100) {  //Skills
-        switch(robotVar) {
-            case 1: // 15in LEFT
-                leftSKILLS();
-                break;
-            case 2: // 24in RIGHT
-                rightSKILLS();
-                break;
-        }
-    }
-    else {  //Match autos
-        switch(robotVar) {
-            case 1: // 15in LEFT
-                if (selectedAuto == 0) {}
-                else if (selectedAuto == 1) {leftSafeSTAY();}
-                else if (selectedAuto == 2) {leftSafeWING();}
-                else if (selectedAuto == 3) {leftGoalRushSTAY();}
-                else if (selectedAuto == 4) {leftGoalRushWING();}
-                break;
-            case 2: // 24in RIGHT
-                if (selectedAuto == 0) {}
-                else if (selectedAuto == 1) {rightSafeSTAY();}
-                else if (selectedAuto == 2) {rightSafeWING();}
-                else if (selectedAuto == 3) {rightMixUpSTAY();}
-                else if (selectedAuto == 4) {rightMixUpWING();}
-                break;
-        }
-    }
+    if (getSelectedAuto() == 0) {}
+    else if (getSelectedAuto() == 1) {leftStandard();}
+    else if (getSelectedAuto() == 2) {leftFourLowSixLong();}
+    //else if (getSelectedAuto() == 3) {}
+    //else if (getSelectedAuto() == 4) {}
 }
 
 
@@ -167,27 +96,5 @@ void autonomous() {
  */
 void opcontrol() {
     pros::lcd::set_text(4, "opControl");
-    if (robotVar == 0) {driverDANIEL();}   // Daniel
-    else if (robotVar == 1) {driverAARON();}   // Noah
-    else if (robotVar == 2) {driverNOAH();}   // Aaron
-}
-
-
-void opcontrol1() {
-    rightSafeWING();
-
-
-
-
-
-
-
-    while(true) {
-        pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
-        pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
-        pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
-        pros::delay(50);
-    }
-    pros::delay(50);
-
+    driverAARON();
 }

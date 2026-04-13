@@ -14,9 +14,8 @@ int getLeverPosition(void);
 void moveLever(int target);
 
 void leverUp(void);
-
 void leverDown(void);
 
+//Autonomous Shortcuts
 void leverUpBlocking(void);
-
-void leverScoreAmount(int blocks);
+void leverScoreAmountBlocking(int blocks);

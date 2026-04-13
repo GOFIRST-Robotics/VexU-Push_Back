@@ -82,20 +82,15 @@ void opcontrol(void);
 #include "robotSubSystems/hood.hpp"
 #include "robotSubSystems/smartAligner.hpp"
 
-#include "Autons/15inBLACK/leftSAFE.hpp"
-#include "Autons/15inBLACK/leftGOALRUSH.hpp"
-#include "Autons/15inBLACK/leftSKILLS.hpp"
-
-#include "Autons/24inMAROON/rightSAFE.hpp"
-#include "Autons/24inMAROON/rightMixUp.hpp"
-#include "Autons/24inMAROON/rightSKILLS.hpp"
+#include "Autons/leftSAFE.hpp"
+#include "Autons/leftGOALRUSH.hpp"
 
 #include "Drivers/AARON.hpp"
-#include "Drivers/NOAH.hpp"
 #include "Drivers/DANIEL.hpp"
 
 #include "selector.hpp"
 #include "utils.hpp"
+#include "timer.hpp"
 
 /**
  * You can add C++-only headers here

@@ -5,11 +5,6 @@
 #include <list>
 #include <string>
 
-//User Variables
-int maxAutos = 3;
-
-
-
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -19,9 +14,10 @@ int maxAutos = 3;
  */
 void initialize() {
     pros::lcd::initialize(); // initialize brain screen
-    pros::lcd::set_text(4, "Initialize");
+    pros::lcd::set_text(0, "Initialize");
     chassis.calibrate(); // calibrate sensors
     pros::delay(250);
+    initSelector(2, 5); //Initalize seleector with default auto and amount of autos
 }
 
 /**
@@ -30,7 +26,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-    pros::lcd::set_text(4, "Disabled");
+    pros::lcd::set_text(0, "Disabled");
 }
 
 /**
@@ -43,18 +39,22 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
-    pros::lcd::set_text(4, "Competition Initialize");
+    pros::lcd::set_text(0, "Competition Initialize");
+    pros::lcd::set_text(7, "==== Auto ======= Action =====================");
 
     while(true) {
-        selector(maxAutos+1);
-            if (selectedAuto == 0) {printToBoth("DO NOTHING");}
-            else if (selectedAuto == 1) {printToBoth("Lever SAFE STAY");}
-            else if (selectedAuto == 2) {printToBoth("Lever SAFE WING");}
-            else if (selectedAuto == 3) {printToBoth("Lever MixUp STAY");}
-            else if (selectedAuto == 4) {printToBoth("Lever MixUp WING");}
-            else {printToBoth("Unknown Auto");}
-        }
+        timerSelect();
+        selector();
+        if (getSelectedAuto() == 0) {printToBoth("DO NOTHING");}
+        else if (getSelectedAuto() == 1) {printToBoth("Lever STANDARD");}
+        else if (getSelectedAuto() == 2) {printToBoth("Lever GREED");}
+        else if (getSelectedAuto() == 3) {printToBoth("Lever NonGREED");}
+        else if (getSelectedAuto() == 4) {printToBoth("Lever LONG + INTERFERE");}
+        else if (getSelectedAuto() == 5) {printToBoth("Lever MID + LONG + INTERFERE");}
+        else {printToBoth("Unknown Auto");}
         pros::delay(10);
+    }
+    
 }
 
 
@@ -70,16 +70,18 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-    pros::lcd::set_text(4, "Autonomous");
+    pros::lcd::set_text(0, "Autonomous");
     controller.clear_line(0);
-    initTimer();
+    startTimer();
+    initLever();
     drakeUP();
+    debugAuto();
 
-    if (selectedAuto == 0) {}
-    else if (selectedAuto == 1) {}
-    else if (selectedAuto == 2) {}
-    else if (selectedAuto == 3) {}
-    else if (selectedAuto == 4) {}
+    if (getSelectedAuto() == 0) {}
+    else if (getSelectedAuto() == 1) {}
+    else if (getSelectedAuto() == 2) {}
+    else if (getSelectedAuto() == 3) {}
+    else if (getSelectedAuto() == 4) {}
 
 }
 
@@ -98,26 +100,10 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-    pros::lcd::set_text(4, "opControl");
+    pros::lcd::set_text(0, "opControl");
     //driverNOAH();
 
-    initLever();
-    pros::delay(100);
-    leverUpBlocking();
-    pros::lcd::set_text(4, "Unblocked");
+    competition_initialize();
+    //autonomous();
 
 }
-
-
-
-/*
-    while(true) {
-        pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
-        pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
-        pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
-        pros::delay(50);
-    }
-    pros::delay(50);
-
-
-*/

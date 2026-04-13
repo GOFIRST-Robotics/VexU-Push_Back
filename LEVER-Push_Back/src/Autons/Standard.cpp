@@ -1,5 +1,7 @@
 #include "main.h"
 
+// Mid goal, matchloader, score, matchloader, score, wing
+
 bool beamBreakBroken = false;
 void rightSafeMAIN() {
     chassis.setPose(24.5,57.5,90);
@@ -75,24 +77,4 @@ void rightSafeMAIN() {
     intakeScore();
     pros::delay(1000);
     intakeInFAST();
-}
-
-
-void rightSafeSTAY() {
-    printToBoth("Running Right Safe Stay");
-    rightSafeMAIN();
-    chassis.moveToPoint(53,25,10000, {.forwards = false, .maxSpeed = 90});   //Long goal 2
-}
-
-void rightSafeWING() {
-    printToBoth("Running Right Safe Wing");
-    rightSafeMAIN();
-    
-    intakeSTOP();
-    chassis.moveToPoint(37, 36.5, 1250);   //back away
-    chassis.turnToHeading(cardinalWEST, 500);
-    chassis.moveToPoint(60, 35.5, 1000, {.forwards = false, .earlyExitRange = 0});   //Drake
-    drakeDOWN();
-    chassis.tank(-5, -5); //low speed back
-
 }
