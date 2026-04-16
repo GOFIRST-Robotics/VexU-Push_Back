@@ -3,6 +3,21 @@
 #include "lemlib/api.hpp"
 
 
+
+extern pros::Controller controller;
+
+// Motors
+extern pros::MotorGroup left_motor_group; // left motors use 600 RPM cartridges
+extern pros::MotorGroup right_motor_group; // right motors use 600 RPM cartridges
+
+// Odom Sensors
+extern pros::Imu imu;
+extern pros::Rotation horizontal_encoder;
+extern pros::Rotation vertical_encoder;
+
+
+
+
 // drivetrain settings
 extern lemlib::Drivetrain drivetrain;
 

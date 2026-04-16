@@ -1,9 +1,14 @@
 #include "main.h"
 
+
+pros::Motor frontIntake(-11, pros::MotorGearset::blue);
+pros::MotorGroup midIntake({18, 19}, pros::MotorGearset::blue);
+pros::Motor scoringIntake(-12, pros::MotorGearset::blue);
+
+
 bool useBeamBreak = true;
-int intakeReverseVar = 1;
 // Intake Beam Break
-pros::adi::DigitalIn beamBreak('C');
+pros::adi::DigitalIn beamBreak('D');
 
 bool isBlockPresent() {   //True is has block, false is no block. Requires invert
     return beamBreak.get_value();   //High is unbroken, no block. Low is broken, block
@@ -45,64 +50,64 @@ bool holdUntilBlockRemoved(uint32_t timeout, uint32_t minTime, bool useBeamBreak
 
 // Autonomous Intake Shortcuts
 void intakeInFAST(){
-    frontAndMidIntake.move_voltage(12000);
-    mainIntake.move_voltage(12000 * intakeReverseVar);
-    scoringIntake.move_voltage(-4000 * intakeReverseVar);
+    frontIntake.move_voltage(12000);
+    midIntake.move_voltage(12000);
+    scoringIntake.move_voltage(-4000);
 }
 
 void intakeInSLOW(){
-    frontAndMidIntake.move_voltage(8000);
-    mainIntake.move_voltage(8000 * intakeReverseVar);
-    scoringIntake.move_voltage(-4000 * intakeReverseVar);
+    frontIntake.move_voltage(8000);
+    midIntake.move_voltage(8000);
+    scoringIntake.move_voltage(-4000);
 }
 
 void intakeOutFAST(){
-    frontAndMidIntake.move_voltage(-12000);
-    mainIntake.move_voltage(-12000 * intakeReverseVar);
-    scoringIntake.move_voltage(-12000 * intakeReverseVar);
+    frontIntake.move_voltage(-12000);
+    midIntake.move_voltage(-12000);
+    scoringIntake.move_voltage(-12000);
 }
 
 void intakeOutSLOW(){
-    frontAndMidIntake.move_voltage(-6000);
-    mainIntake.move_voltage(-8000 * intakeReverseVar);
-    scoringIntake.move_voltage(-8000 * intakeReverseVar);
+    frontIntake.move_voltage(-6000);
+    midIntake.move_voltage(-8000);
+    scoringIntake.move_voltage(-8000);
 }
 
 void intakeOutSuperSLOW(){
-    frontAndMidIntake.move_voltage(-4000);
-    mainIntake.move_voltage(-6000 * intakeReverseVar);
-    scoringIntake.move_voltage(-8000 * intakeReverseVar);
+    frontIntake.move_voltage(-4000);
+    midIntake.move_voltage(-6000);
+    scoringIntake.move_voltage(-8000);
 }
 
 void intakeCustomSpeed(int multiplier){
-    frontAndMidIntake.move_voltage(12000 * multiplier);
-    mainIntake.move_voltage(12000 * multiplier * intakeReverseVar);
+    frontIntake.move_voltage(12000 * multiplier);
+    midIntake.move_voltage(12000 * multiplier);
 }
 
 void intakeScore() {
-    frontAndMidIntake.move_voltage(12000);
-    mainIntake.move_voltage(12000 * intakeReverseVar);
-    scoringIntake.move_voltage(12000 * intakeReverseVar);
+    frontIntake.move_voltage(12000);
+    midIntake.move_voltage(12000);
+    scoringIntake.move_voltage(12000);
 }
 
 void intakeScoreSLOW() {
-    frontAndMidIntake.move_voltage(12000);
-    mainIntake.move_voltage(12000 * intakeReverseVar);
-    scoringIntake.move_voltage(9000 * intakeReverseVar);
+    frontIntake.move_voltage(12000);
+    midIntake.move_voltage(12000);
+    scoringIntake.move_voltage(9000);
 }
 
 void intakeSTOP() {
-    frontAndMidIntake.move_voltage(0);
-    mainIntake.move_voltage(0 * intakeReverseVar);
-    scoringIntake.move_voltage(-4000 * intakeReverseVar);
+    frontIntake.move_voltage(0);
+    midIntake.move_voltage(0);
+    scoringIntake.move_voltage(-4000);
 }
 
 void intakeFULLSTOP() {
-    frontAndMidIntake.move_voltage(0);
-    mainIntake.move_voltage(0 * intakeReverseVar);
-    scoringIntake.move_voltage(0 * intakeReverseVar);
+    frontIntake.move_voltage(0);
+    midIntake.move_voltage(0);
+    scoringIntake.move_voltage(0);
 }
 
 void intakeInFIRSTSTAGE(int multiplier) {
-    frontAndMidIntake.move_voltage(12000 * multiplier);
+    frontIntake.move_voltage(12000 * multiplier);
 }

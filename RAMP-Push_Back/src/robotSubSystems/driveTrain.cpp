@@ -1,6 +1,23 @@
 #include "main.h"
 
 
+
+pros::Controller controller(pros::E_CONTROLLER_MASTER);
+
+// Motors
+pros::MotorGroup left_motor_group({10, -9, 21, -6, 7}, pros::MotorGearset::blue); // left motors use 600 RPM cartridges
+pros::MotorGroup right_motor_group({-1, 2, -3, 4, -5}, pros::MotorGearset::blue); // right motors use 600 RPM cartridges
+
+
+// Odom Sensors
+pros::Imu imu(15);
+pros::Rotation horizontal_encoder(17);
+pros::Rotation vertical_encoder(16);
+
+
+
+
+
 // drivetrain settings
 lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group
                               &right_motor_group, // right motor group

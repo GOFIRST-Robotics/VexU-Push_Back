@@ -20,7 +20,6 @@ void selector() {
             pros::delay(5);
         }
     }
-    pros::delay(10);
 }
 
 int getSelectedAuto() {

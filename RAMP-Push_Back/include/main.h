@@ -74,7 +74,6 @@ void opcontrol(void);
 
 #ifdef __cplusplus
 
-#include "robotSubSystems/globals.hpp"
 #include "robotSubSystems/driveTrain.hpp"
 #include "robotSubSystems/intake.hpp"
 #include "robotSubSystems/drake.hpp"

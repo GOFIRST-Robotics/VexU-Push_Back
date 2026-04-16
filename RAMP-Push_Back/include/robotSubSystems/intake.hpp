@@ -1,8 +1,12 @@
 #pragma once
 #include "main.h"
 
+extern pros::Motor frontIntake;
+extern pros::MotorGroup midIntake;
+extern pros::Motor scoringIntake;
+
+
 extern bool useBeamBreak;
-extern int intakeReverseVar;
 // Intake Beam Break
 extern pros::adi::DigitalIn beamBreak;
 bool isBlockPresent(void);
