@@ -53,6 +53,9 @@ void driverNOAH() {
                 // Intake
             }
         }
+        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
+            // outtake slowly
+        }
         else if (score) {
             // intake
         }
