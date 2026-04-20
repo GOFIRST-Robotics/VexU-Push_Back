@@ -83,6 +83,7 @@ void opcontrol(void);
 
 #include "Autons/leftSAFE.hpp"
 #include "Autons/leftGOALRUSH.hpp"
+#include "Autons/leftELIMS.hpp"
 
 #include "Drivers/AARON.hpp"
 #include "Drivers/DANIEL.hpp"

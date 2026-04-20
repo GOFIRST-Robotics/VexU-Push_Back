@@ -52,13 +52,13 @@ bool holdUntilBlockRemoved(uint32_t timeout, uint32_t minTime, bool useBeamBreak
 void intakeInFAST(){
     frontIntake.move_voltage(12000);
     midIntake.move_voltage(12000);
-    scoringIntake.move_voltage(-4000);
+    scoringIntake.move_voltage(-2000);
 }
 
 void intakeInSLOW(){
     frontIntake.move_voltage(8000);
     midIntake.move_voltage(8000);
-    scoringIntake.move_voltage(-4000);
+    scoringIntake.move_voltage(-2000);
 }
 
 void intakeOutFAST(){
@@ -99,7 +99,7 @@ void intakeScoreSLOW() {
 void intakeSTOP() {
     frontIntake.move_voltage(0);
     midIntake.move_voltage(0);
-    scoringIntake.move_voltage(-4000);
+    scoringIntake.move_voltage(-2000);
 }
 
 void intakeFULLSTOP() {

@@ -1,8 +1,8 @@
 #include "main.h"
 
 
-pros::adi::Pneumatics fourBarPiston('G', false);
-pros::adi::Pneumatics backFlapPiston('G', false);
+pros::adi::Pneumatics fourBarPiston('F', false);
+pros::adi::Pneumatics backFlapPiston('E', false);
 
 // Four Bar Shortcuts
 void fourBarUP() {

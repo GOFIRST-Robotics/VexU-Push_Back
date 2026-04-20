@@ -1,5 +1,8 @@
 #pragma once
 #include "main.h"
 
-void leftStandard(void);
+void leftStandardMain(void);
 
+void leftStandardWing(void);
+void leftStandardWingDisrupt(void);
+void leftStandardDisrupt(void);

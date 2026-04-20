@@ -5,13 +5,12 @@
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // Motors
-pros::MotorGroup left_motor_group({1, -8, 3, -4, 5}, pros::MotorGearset::blue); // left motors use 600 RPM cartridges
-pros::MotorGroup right_motor_group({-11, 12, -13, 14, -15}, pros::MotorGearset::blue); // right motors use 600 RPM cartridges
+pros::MotorGroup left_motor_group({6, -7, 8, -9, 10}, pros::MotorGearset::blue); // left motors use 600 RPM cartridges
+pros::MotorGroup right_motor_group({-16, 17, -18, 19, -20}, pros::MotorGearset::blue); // right motors use 600 RPM cartridges
 
 // Odom Sensors
-pros::Imu imu(16);
-pros::Rotation horizontal_encoder(17);
-pros::Rotation vertical_encoder(18);
+pros::Imu imu(21);
+pros::Rotation vertical_encoder(15);
 
 
 // drivetrain settings
@@ -20,12 +19,10 @@ lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group
                               11.95, // 10 inch track width
                               lemlib::Omniwheel::NEW_275, // using new 4" omnis
                               600, // drivetrain rpm is 600
-                              2 // horizontal drift is 2
+                              8 // horizontal drift is 2
 );
 
 
-// horizontal tracking wheel
-//----lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -1.906);
 // vertical tracking wheel
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, 2, -0.15);
 
