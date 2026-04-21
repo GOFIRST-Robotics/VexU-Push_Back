@@ -50,8 +50,7 @@ const int leverMaxAngle = 320;
 const int leverMinAngle = 0;
 
 
-
-void moveLever(int target) {
+void moveLever(int target, int maxVoltage) {
     if (target > leverMaxAngle) {target = leverMaxAngle;}
     else if (target < leverMinAngle) {target = leverMinAngle;}
 
@@ -60,15 +59,28 @@ void moveLever(int target) {
     float kP = 0.01;
 
     power = kP * (target - pos);
+    float outputVoltage = power * 12000;
+
+    // Cap max voltage to given max value
+    if (outputVoltage > maxVoltage) {
+        outputVoltage = maxVoltage;
+    }
+    else if (outputVoltage < -maxVoltage) {
+        outputVoltage = maxVoltage;
+    }
+
     leverMotorLeft.move_voltage(12000 * power);
     leverMotorRight.move_voltage(12000 * power);
+}
+
+void moveLever(int target) {
+    moveLever(target, 12000);
 }
 
 
 void leverUp() {leverTarget = leverMaxAngle;}
 
 void leverDown() {leverTarget = leverMinAngle;}
-
 
 
 
