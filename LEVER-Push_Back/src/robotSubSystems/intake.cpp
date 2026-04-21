@@ -1,9 +1,7 @@
 #include "main.h"
 
 
-pros::MotorGroup frontAndMidIntake({-7, 19}, pros::MotorGearset::blue); //Front and color sort
-pros::Motor mainIntake(20, pros::MotorGearset::blue); //Reverse multiplier
-pros::Motor scoringIntake(-6, pros::MotorGearset::blue); //Reverse multiplier
+pros::MotorGroup intakeMain({-13, 14}, pros::MotorGearset::blue); //Front and color sort
 
 
 bool useBeamBreak = true;
@@ -51,64 +49,31 @@ bool holdUntilBlockRemoved(uint32_t timeout, uint32_t minTime, bool useBeamBreak
 
 // Autonomous Intake Shortcuts
 void intakeInFAST(){
-    frontAndMidIntake.move_voltage(12000);
-    mainIntake.move_voltage(12000);
-    scoringIntake.move_voltage(-4000);
+    intakeMain.move_voltage(12000);
 }
 
 void intakeInSLOW(){
-    frontAndMidIntake.move_voltage(8000);
-    mainIntake.move_voltage(8000);
-    scoringIntake.move_voltage(-4000);
+    intakeMain.move_voltage(8000);
 }
 
 void intakeOutFAST(){
-    frontAndMidIntake.move_voltage(-12000);
-    mainIntake.move_voltage(-12000);
-    scoringIntake.move_voltage(-12000);
+    intakeMain.move_voltage(-12000);
 }
 
 void intakeOutSLOW(){
-    frontAndMidIntake.move_voltage(-6000);
-    mainIntake.move_voltage(-8000);
-    scoringIntake.move_voltage(-8000);
+    intakeMain.move_voltage(-8000);
 }
 
 void intakeOutSuperSLOW(){
-    frontAndMidIntake.move_voltage(-4000);
-    mainIntake.move_voltage(-6000);
-    scoringIntake.move_voltage(-8000);
+    intakeMain.move_voltage(-5500);
 }
 
 void intakeCustomSpeed(int multiplier){
-    frontAndMidIntake.move_voltage(12000 * multiplier);
-    mainIntake.move_voltage(12000 * multiplier);
-}
-
-void intakeScore() {
-    frontAndMidIntake.move_voltage(12000);
-    mainIntake.move_voltage(12000);
-    scoringIntake.move_voltage(12000);
-}
-
-void intakeScoreSLOW() {
-    frontAndMidIntake.move_voltage(12000);
-    mainIntake.move_voltage(12000);
-    scoringIntake.move_voltage(9000);
+    intakeMain.move_voltage(12000 * multiplier);
 }
 
 void intakeSTOP() {
-    frontAndMidIntake.move_voltage(0);
-    mainIntake.move_voltage(0);
-    scoringIntake.move_voltage(-4000);
+    intakeMain.move_voltage(0);
 }
 
-void intakeFULLSTOP() {
-    frontAndMidIntake.move_voltage(0);
-    mainIntake.move_voltage(0);
-    scoringIntake.move_voltage(0);
-}
 
-void intakeInFIRSTSTAGE(int multiplier) {
-    frontAndMidIntake.move_voltage(12000 * multiplier);
-}

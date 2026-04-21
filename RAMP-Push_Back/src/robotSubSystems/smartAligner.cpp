@@ -2,14 +2,14 @@
 
 
 bool useSmartAligner = true;
-pros::adi::DigitalIn smartAligner('D');
+pros::adi::DigitalIn smartAligner('C');
 
 bool isAligned() {
     return smartAligner.get_value();
 }
 
 bool moveToAlignerReset(int x, int y, int resetX, int resetY, int resetAngle, int timeout) {
-    chassis.moveToPoint(x, y, timeout, {.forwards = false, .maxSpeed = 80});
+    chassis.moveToPoint(x, y, timeout, {.forwards = false, .maxSpeed = 60});
     pros::delay(100);
     while (chassis.isInMotion() && !isAligned()) {
         pros::delay(10);

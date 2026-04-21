@@ -2,9 +2,7 @@
 #include "main.h"
 
 
-extern pros::MotorGroup frontAndMidIntake;  //Front and color sort
-extern pros::Motor mainIntake; //Reverse multiplier
-extern pros::Motor scoringIntake; //Reverse multiplier
+extern pros::MotorGroup intakeMain;
 
 
 extern bool useBeamBreak;
@@ -23,9 +21,5 @@ void intakeOutFAST(void);
 void intakeOutSLOW(void);
 void intakeOutSuperSLOW(void);
 void intakeCustomSpeed(int multiplier);
-void intakeScore(void);
-void intakeScoreSLOW(void);
 void intakeSTOP(void);
-void intakeFULLSTOP(void);
 
-void intakeInFIRSTSTAGE(int multiplier);

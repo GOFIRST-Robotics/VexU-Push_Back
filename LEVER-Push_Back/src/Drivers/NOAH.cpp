@@ -20,6 +20,16 @@ static int FOUR_BAR_DELAY = 20;
 int scraperCounter = 0;
 static int SCRAPER_DELAY = 20;
 
+
+bool modifier1;
+bool score;
+
+int fourBarCounter = 0;
+static int FOUR_BAR_DELAY = 20;
+
+int scraperCounter = 0;
+static int SCRAPER_DELAY = 20;
+
 void driverNOAH() {
     controller.print(0,0,"Driver - Noah");
     while(true) {

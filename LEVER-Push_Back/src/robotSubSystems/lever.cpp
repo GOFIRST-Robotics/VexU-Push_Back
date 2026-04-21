@@ -1,9 +1,9 @@
 #include "main.h"
 #include <tuple>
+///////////////////////////////12
 
-
-pros::Motor leverMotorLeft(-6, pros::MotorGearset::green);
-pros::Motor leverMotorRight(7, pros::MotorGearset::green);
+pros::Motor leverMotorLeft(-4, pros::MotorGearset::green);
+pros::Motor leverMotorRight(5, pros::MotorGearset::green);
 
 int useLeftMotor = 1;   // first: temp disconnect, second: perma disable
 int useRightMotor = 1;   // first: temp disconnect, second: perma disable

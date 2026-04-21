@@ -39,11 +39,11 @@ void rightSafeMAIN() {
 
 
     chassis.moveToPoint(50, 24, 1000, {.forwards = false, .maxSpeed = 60, .minSpeed = 40}, false);   //Goal 1
-    intakeScore();
+    //intakeScore();
     holdUntilBlockRemoved(750, 250, useBeamBreak);
     intakeOutSLOW();
     pros::delay(100);
-    intakeScore();
+    //intakeScore();
     pros::delay(750);
     intakeInFAST();
     chassis.moveToPoint(26,27, 1000, {.maxSpeed = 100}, false);  //Match Loader 2
@@ -69,12 +69,12 @@ void rightSafeMAIN() {
 
 
     chassis.moveToPoint(50,25, 1500, {.forwards = false, .maxSpeed = 60, .minSpeed = 40}, false);   //Goal 2
-    intakeScore();
+    //intakeScore();
     scraperUP();
     holdUntilBlockRemoved(750, 250, useBeamBreak);  //Score with unjam
     intakeOutSLOW();
     pros::delay(100);
-    intakeScore();
+    //intakeScore();
     pros::delay(1000);
     intakeInFAST();
 }

@@ -1,81 +1,113 @@
 #include "main.h"
 
 
-void leftStandard() {
+void leftStandardMain() {
     printToBoth("Running Left Standard");
 
 
     chassis.setPose(24.5,87.5,cardinalWEST);
-    chassis.moveToPoint(53,86, 1000, {.forwards = false, .maxSpeed = 90});    //Align to mid goal
+    chassis.moveToPoint(53,87.5, 1000, {.forwards = false, .maxSpeed = 80});    //Align to mid goal
     chassis.turnToHeading(cardinalNORTHWEST, 300);
-    chassis.moveToPoint(59,83, 700, {.forwards = false, .maxSpeed = 127}); //Mid goal
-    chassis.waitUntilDone();
+    chassis.moveToPoint(61,83, 500, {.forwards = false, .maxSpeed = 127}); //Mid goal
+    pros::delay(150);
     intakeScore();
-    pros::delay(750);
-    intakeSTOP();
+    pros::delay(150);
+    
 
 
     chassis.moveToPoint(26,118, 2000, {.maxSpeed = 90}); //Long movement
     hoodUP();
-    chassis.turnToHeading(cardinalWEST-6, 1000);    //turn to match loader
+    chassis.turnToHeading(cardinalWEST-6, 400);    //turn to match loader
     scraperDOWN();
     intakeInFAST();
 
 
-    chassis.moveToPoint(20,119, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 1
+    chassis.moveToPoint(20,119.5, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 1
     chassis.turnToHeading(cardinalWEST, 500, {.earlyExitRange = 2});
-    chassis.moveToPoint(4, 119, 2500, {.maxSpeed = 50, .minSpeed = 30}, false);  //Match Loader 1
-    holdUntilBlockPresent(1000, 500, false);
-    pros::delay(500);
+    chassis.moveToPoint(4, 119.5, 1500, {.maxSpeed = 50, .minSpeed = 30}, false);  //Match Loader 1
     intakeSTOP();
-    scraperUP();
 
 
-    chassis.moveToPoint(30, 120, 1500, {.forwards = false, .maxSpeed = 80, .minSpeed = 40}, false);   //half measure
-    chassis.turnToHeading(cardinalSOUTHWEST, 600, {}, false);
-    intakeOutFAST();
-    pros::delay(250);
-    intakeSTOP();
-    chassis.turnToHeading(cardinalWEST+7, 600);
 
 
-    //chassis.moveToPoint(50, 120, 1000, {.forwards = false, .maxSpeed = 60, .minSpeed = 40}, false);   //Goal 1
-    moveToAlignerReset(60, 120, 42, 120, cardinalWEST, 2000);   //Reset Goal 1
+    moveToAlignerReset(60, 121, 42, 120, cardinalWEST, 1000);   //Reset Goal 1
     intakeScore();
-    scraperDOWN();
-    holdUntilBlockRemoved(2000, 500, false);
-    intakeOutSLOW();
-    pros::delay(100);
-    intakeScore();
-    pros::delay(750);
-    intakeInFAST();
+    pros::delay(550);
+
 
     chassis.moveToPoint(20,120, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 2
     chassis.turnToHeading(cardinalWEST, 500, {.earlyExitRange = 2});
-    chassis.moveToPoint(4, 120, 2000, {.maxSpeed = 50, .minSpeed = 30}, false);  //Match Loader 2
-    pros::delay(1500);
+    chassis.moveToPoint(4, 120, 1500, {.maxSpeed = 50, .minSpeed = 30});  //Match Loader 2
+    pros::delay(250);
+    intakeInFAST();
+    chassis.waitUntilDone();
+    pros::delay(750);
     intakeSTOP();
 
 
-    //chassis.moveToPoint(50,120, 1500, {.forwards = false, .maxSpeed = 60, .minSpeed = 40}, false);   //Goal 2
-    moveToAlignerReset(60, 120, 42, 120, cardinalWEST, 2000);   //Reset Goal 2
+    chassis.moveToPoint(60, 121, 1500, {.forwards = false, .maxSpeed = 65});   //Reset Goal 2
+    pros::delay(1000);
     intakeScore();
     scraperUP();
-    holdUntilBlockRemoved(1000, 500, false);    //Score with unjam
-    intakeOutSLOW();
-    pros::delay(100);
-    intakeScore();
-    pros::delay(1000);
-
-
+    pros::delay(1350);
     intakeSTOP();
-    chassis.moveToPoint(37, 109.5, 1250);   //back away
-    chassis.turnToHeading(cardinalWEST, 500);
-    
-    waitUntilTime();    //Wait to Drake
-    chassis.moveToPoint(59, 110.5, 1000, {.forwards = false, .earlyExitRange = 0});   //Drake
-    drakeDOWN();
-    chassis.tank(-5, -5); //low speed back
 }
 
 
+
+
+
+
+void leftStandardWing() {
+    leftStandardMain();
+
+
+    chassis.moveToPoint(37, 109, 1500);   //back away
+    scraperUP();
+    chassis.turnToHeading(cardinalEAST, 650);
+    drakeDOWN();
+
+    chassis.moveToPoint(53, 110, 1000);   //Drake
+
+
+    waitUntilTime();    //Wait to Drake
+    chassis.moveToPoint(65, 108.5, 1000);   //Drake
+    chassis.waitUntilDone();
+    //chassis.tank(5, -5); //low speed back
+}
+
+
+void leftStandardWingDisrupt() {
+    leftStandardMain();
+
+
+    chassis.moveToPoint(37, 109, 1500);   //back away
+    scraperUP();
+    chassis.turnToHeading(cardinalEAST, 650);
+    
+
+    chassis.moveToPoint(63, 110, 1000);   //Drake
+    drakeDOWN();
+    chassis.waitUntilDone();
+    waitUntilTime();
+
+    drakeUP();
+    pros::delay(550);
+    
+    chassis.turnToPoint(79, 91, 1000);
+    chassis.moveToPoint(79, 89, 2000);
+}
+
+
+void leftStandardDisrupt() {
+    leftStandardMain();
+
+
+    chassis.moveToPoint(37, 108, 1500);   //back away
+    scraperUP();
+    
+
+
+    chassis.turnToPoint(79, 91, 500);
+    chassis.moveToPoint(77.5, 89, 3000);
+}

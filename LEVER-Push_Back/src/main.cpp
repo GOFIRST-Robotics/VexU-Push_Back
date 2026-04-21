@@ -6,6 +6,7 @@
 #include <string>
 
 
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -72,6 +73,7 @@ void competition_initialize() {
 void autonomous() {
     pros::lcd::set_text(0, "Autonomous");
     controller.clear_line(0);
+
     startTimer();
     initLever();
     drakeUP();
@@ -101,9 +103,7 @@ void autonomous() {
  */
 void opcontrol() {
     pros::lcd::set_text(0, "opControl");
-    //driverNOAH();
+    driverNOAH();
 
-    competition_initialize();
-    //autonomous();
 
 }

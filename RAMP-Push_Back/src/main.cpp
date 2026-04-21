@@ -17,7 +17,7 @@ void initialize() {
     pros::lcd::set_text(0, "Initialize");
     chassis.calibrate(); // calibrate sensors
     pros::delay(250);
-    initSelector(2, 2); //Initalize seleector with default auto and amount of autos
+    initSelector(8, 8); //Initalize seleector with default auto and amount of autos
 }
 
 /**
@@ -45,10 +45,16 @@ void competition_initialize() {
         timerSelect();
         selector();
         if (getSelectedAuto() == 0) {printToBoth("DO NOTHING");}
-        else if (getSelectedAuto() == 1) {printToBoth("Ramp STANDARD");}
-        else if (getSelectedAuto() == 2) {printToBoth("Ramp 4Low 6Long");}
-        //else if (getSelectedAuto() == 3) {printToBoth("Ramp MixUp STAY");}
-        //else if (getSelectedAuto() == 4) {printToBoth("Ramp MixUp WING");}
+        else if (getSelectedAuto() == 1) {printToBoth("Ramp STANDARD WING");}
+        else if (getSelectedAuto() == 2) {printToBoth("Ramp STANDARD WING + DISRUPT");}
+        else if (getSelectedAuto() == 3) {printToBoth("Ramp STANDARD DISRUPT");}
+
+        else if (getSelectedAuto() == 4) {printToBoth("Ramp 4Low 6 Long WING");}
+        else if (getSelectedAuto() == 5) {printToBoth("Ramp 4Low 6 Long WING + DISRUPT");}
+        else if (getSelectedAuto() == 6) {printToBoth("Ramp 4Low 6 Long DISRUPT");}
+
+        else if (getSelectedAuto() == 7) {printToBoth("Ramp Elims WING");}
+        else if (getSelectedAuto() == 8) {printToBoth("Ramp Elims WING + DISRUPT");}
         else {printToBoth("Unknown Auto");}
     }
     pros::delay(10);
@@ -71,13 +77,18 @@ void autonomous() {
     controller.clear_line(0);
     startTimer();
     drakeUP();
-    debugAuto();
 
     if (getSelectedAuto() == 0) {}
-    else if (getSelectedAuto() == 1) {leftStandard();}
-    else if (getSelectedAuto() == 2) {leftFourLowSixLong();}
-    //else if (getSelectedAuto() == 3) {}
-    //else if (getSelectedAuto() == 4) {}
+    else if (getSelectedAuto() == 1) {leftStandardWing();}
+    else if (getSelectedAuto() == 2) {leftStandardWingDisrupt();}
+    else if (getSelectedAuto() == 3) {leftStandardDisrupt();}
+
+    else if (getSelectedAuto() == 4) {leftFourLowSixLongWing();}
+    else if (getSelectedAuto() == 5) {leftFourLowSixLongWingDisrupt();}
+    else if (getSelectedAuto() == 6) {leftFourLowSixLongDisrupt();}
+
+    else if (getSelectedAuto() == 7) {leftElimsWing();}
+    else if (getSelectedAuto() == 8) {leftElimsWingDisrupt();}
 }
 
 
@@ -97,4 +108,6 @@ void autonomous() {
 void opcontrol() {
     pros::lcd::set_text(4, "opControl");
     driverAARON();
+
+    //autonomous();
 }

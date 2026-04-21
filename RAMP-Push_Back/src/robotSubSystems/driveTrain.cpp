@@ -29,7 +29,7 @@ lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group
 
 
 // horizontal tracking wheel
-//----lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -1.906);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -1.906);
 // vertical tracking wheel
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, 2, -0.15);
 

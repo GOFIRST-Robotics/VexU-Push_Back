@@ -1,5 +1,7 @@
 #pragma once
 #include "main.h"
 
-void leftFourLowSixLong(void);
-
+void leftFourLowSixLongMAIN(void);
+void leftFourLowSixLongWing(void);
+void leftFourLowSixLongWingDisrupt(void);
+void leftFourLowSixLongDisrupt(void);
