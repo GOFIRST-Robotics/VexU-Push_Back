@@ -8,7 +8,7 @@
 /** FOR DANIEL
 *  Here is the intake motor group
 */
-pros::MotorGroup intakeMotors({}, pros::MotorGearset::blue);
+pros::MotorGroup intakeMotors({-13, 14}, pros::MotorGearset::blue);
 
 
 bool modifier1;
@@ -40,24 +40,23 @@ void driverNOAH() {
         /*
         * ------- intake stuff -------  
         */
-        // TODO: This first IF statement checks if the lever is up, and outtakes if it is.
-        // We need to find a good value to determine if it is up or not
-        if (getLeverPosition() >> 0 && !score) {
-            // outtake
+        // TODO: Tune in an angle to determine if the lever is high enough to start outtaking
+        if (getLeverPosition() >> 30 && !score) {
+            intakeMotors.move(-10000); // Outtake
         }
         if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
             if (modifier1) {
-                // Outtake
+                intakeMotors.move(-10000); // Outtake
             }
             else {
-                // Intake
+                intakeMotors.move(10000); // Intake
             }
         }
         else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
-            // outtake slowly
+            intakeMotors.move(-4000); // outtake slowly
         }
         else if (score) {
-            // intake
+            intakeMotors.move(10000); // Automatically intake when scoring the lever
         }
 
 
@@ -65,7 +64,14 @@ void driverNOAH() {
         * ------- Lever Stuff --------
         */
         if (score) {
-            leverUp();
+            if (fourBarPiston.is_extended()) {
+                leverUp();
+            }
+            else {
+                // This moves the lever at a slower speed when scoring in the middle goal
+                // TODO: Tune in a good max voltage for this motion
+                movelever( 320, 9000);
+            }
         }
         else {
             leverDown();
@@ -81,30 +87,6 @@ void driverNOAH() {
         else {
             backFlapCLOSE();
         } 
-
-
-        /*
-        * ------- scraper controls -------  
-        */
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && modifier1) {
-            
-            // Only shift state if delay timer has passed
-            if (scraperCounter == 0) {
-                if (scraperPiston.is_extended()) {
-                    scraperDOWN();
-                }
-                else {
-                    scraperUP();
-                }
-                
-                // Reset timer
-                scraperCounter = SCRAPER_DELAY;
-            }
-        }
-        else if (scraperCounter > 0) {
-            // Count down timer
-            scraperCounter--;
-        }
 
 
         /*
@@ -128,6 +110,30 @@ void driverNOAH() {
         else if (fourBarCounter > 0){
             // Count down timer
             fourBarCounter--;
+        }
+
+
+        /*
+        * ------- scraper controls -------  
+        */
+        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && modifier1) {
+            
+            // Only shift state if delay timer has passed
+            if (scraperCounter == 0) {
+                if (scraperPiston.is_extended()) {
+                    scraperDOWN();
+                }
+                else {
+                    scraperUP();
+                }
+                
+                // Reset timer
+                scraperCounter = SCRAPER_DELAY;
+            }
+        }
+        else if (scraperCounter > 0) {
+            // Count down timer
+            scraperCounter--;
         }
 
 

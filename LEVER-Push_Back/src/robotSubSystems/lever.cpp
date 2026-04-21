@@ -69,8 +69,8 @@ void moveLever(int target, int maxVoltage) {
         outputVoltage = maxVoltage;
     }
 
-    leverMotorLeft.move_voltage(12000 * power);
-    leverMotorRight.move_voltage(12000 * power);
+    leverMotorLeft.move_voltage(outputVoltage);
+    leverMotorRight.move_voltage(outputVoltage);
 }
 
 void moveLever(int target) {

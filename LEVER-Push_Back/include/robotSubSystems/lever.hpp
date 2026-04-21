@@ -10,7 +10,7 @@ extern pros::Motor leverMotorRight;
 void initLever();
 int getLeverPosition(void);
 
-
+void movelever(int target, int maxVoltage);
 void moveLever(int target);
 
 void leverUp(void);
