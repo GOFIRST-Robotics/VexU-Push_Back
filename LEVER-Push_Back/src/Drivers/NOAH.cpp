@@ -9,6 +9,8 @@ static int FOUR_BAR_DELAY = 20;
 
 int scraperCounter = 0;
 static int SCRAPER_DELAY = 20;
+int j = 0;
+int sc = 0;
 
 void driverNOAH() {
     controller.print(0,0,"Driver - Noah");
@@ -37,17 +39,20 @@ void driverNOAH() {
         }
         if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
             if (modifier1) {
-                // Outtake
+                intakeOutFAST();
             }
             else {
-                // Intake
+                intakeInFAST();
             }
         }
         else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
-            // outtake slowly
+            intakeOutSLOW();
         }
         else if (score) {
-            // intake
+            intakeInFAST();
+        }
+        else {
+            intakeSTOP();
         }
 
 
@@ -76,59 +81,68 @@ void driverNOAH() {
         /*
         * ------- scraper controls -------  
         */
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && modifier1) {
-            
-            // Only shift state if delay timer has passed
-            if (scraperCounter == 0) {
+        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+            if(sc == 0) {  //button just pressed
                 if (scraperPiston.is_extended()) {
-                    scraperDOWN();
-                }
-                else {
-                    scraperUP();
-                }
-                
-                // Reset timer
-                scraperCounter = SCRAPER_DELAY;
+                     scraperUP();
+                 }
+                 else {
+                     scraperDOWN();
+                 }
+                 sc = 1;
             }
         }
-        else if (scraperCounter > 0) {
-            // Count down timer
-            scraperCounter--;
-        }
+        else {sc = 0;}
 
 
         /*
         * ------- 4 Bar Controls -------
         */
+        
         if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
-            
-            // Only shift state if delay timer has passed
-            if (fourBarCounter == 0) {
+            if(j == 0) {  //button just pressed
                 if (fourBarPiston.is_extended()) {
-                    fourBarDOWN();
-                }
-                else {
-                    fourBarUP();
-                }
-                
-                // Reset timer
-                fourBarCounter = FOUR_BAR_DELAY;
+                     fourBarDOWN();
+                 }
+                 else {
+                     fourBarUP();
+                 }
+                 j = 1;
             }
         }
-        else if (fourBarCounter > 0){
-            // Count down timer
-            fourBarCounter--;
-        }
+        else {j = 0;}
+
+
+            
+        //     // Only shift state if delay timer has passed
+        //     if (fourBarCounter == 0) {
+        //         if (fourBarPiston.is_extended()) {
+        //             fourBarDOWN();
+        //         }
+        //         else {
+        //             fourBarUP();
+        //         }
+                
+        //         // Reset timer
+        //         fourBarCounter = FOUR_BAR_DELAY;
+        //     }
+        // }
+        // else if (fourBarCounter > 0){
+        //     // Count down timer
+        //     fourBarCounter--;
+        // }
 
 
         /*
         * ------- Wing stuff -------  
         */
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && !modifier1) {
             drakeDOWN();
+            //scraperDOWN();
         }
         else {
             drakeUP();
+            //scraperUP();
         }
 
         

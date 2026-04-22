@@ -4,6 +4,7 @@
 
 pros::Motor leverMotorLeft(-4, pros::MotorGearset::green);
 pros::Motor leverMotorRight(5, pros::MotorGearset::green);
+pros::Rotation leverEncoder(12);
 
 int useLeftMotor = 1;   // first: temp disconnect, second: perma disable
 int useRightMotor = 1;   // first: temp disconnect, second: perma disable
@@ -25,7 +26,7 @@ void initLever() {
     }};
 }
 
-int getLeverPosition() {
+int getLeverPositionMOTORS() {
     int leftMotorPos = leverMotorLeft.get_position();
     int rightMotorPos = leverMotorRight.get_position();
 
@@ -42,6 +43,10 @@ int getLeverPosition() {
 
     int avg = (leftMotorPos + rightMotorPos) / (useLeftMotor + useRightMotor);  //Average if both motors working, otherwise only return working motor
     return avg;
+}
+
+int getLeverPosition() {
+    return leverEncoder.get_position();
 }
 
 

@@ -6,18 +6,18 @@ pros::adi::Pneumatics backFlapPiston('E', false);
 
 // Four Bar Shortcuts
 void fourBarUP() {
-    fourBarPiston.set_value(true);
+    fourBarPiston.extend();
 }
 
 void fourBarDOWN() {
-    fourBarPiston.set_value(false);
+    fourBarPiston.retract();
 }
 
 
 void backFlapOPEN() {
-    backFlapPiston.set_value(true);
+    backFlapPiston.extend();
 }
 
 void backFlapCLOSE() {
-    backFlapPiston.set_value(false);
+    backFlapPiston.retract();
 }

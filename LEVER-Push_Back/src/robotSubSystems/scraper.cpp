@@ -6,9 +6,9 @@ pros::adi::Pneumatics scraperPiston('H', false);
 
 // Scraper Shortcuts
 void scraperDOWN() {
-    scraperPiston.set_value(true);
+    scraperPiston.extend();
 }
 
 void scraperUP() {
-    scraperPiston.set_value(false);
+    scraperPiston.retract();
 }

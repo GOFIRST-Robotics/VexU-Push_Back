@@ -6,9 +6,9 @@ pros::adi::Pneumatics DrakePiston('G', false);
 
 // Drake Shortcuts
 void drakeDOWN() {
-    DrakePiston.set_value(false);
+    DrakePiston.retract();
 }
 
 void drakeUP() {
-    DrakePiston.set_value(true);
+    DrakePiston.extend();
 }
