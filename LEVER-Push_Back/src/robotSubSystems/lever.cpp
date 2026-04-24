@@ -9,7 +9,7 @@ pros::Rotation leverEncoder(12);
 int useLeftMotor = 1;   // first: temp disconnect, second: perma disable
 int useRightMotor = 1;   // first: temp disconnect, second: perma disable
 
-int leverTarget = 0;
+int leverTarget = 178;
 
 void initLever() {
     leverMotorLeft.tare_position();
@@ -21,7 +21,7 @@ void initLever() {
         while(true) {
             moveLever(leverTarget);
             pros::delay(10);
-            pros::lcd::set_text(5, "Lever Pos: " + std::to_string(getLeverPosition()) + ", L Mot: " + std::to_string((int) leverMotorLeft.get_position()) + ", R Mot: " + std::to_string((int) leverMotorRight.get_position()));
+           // pros::lcd::set_text(5, "Lever Pos: " + std::to_string(getLeverPosition()) + ", 4bar: " + std::to_string((int) fourBarPiston.is_extended()) + ", Target:" + std::to_string(leverTarget));
         }
     }};
 }
@@ -46,31 +46,55 @@ int getLeverPositionMOTORS() {
 }
 
 int getLeverPosition() {
-    return leverEncoder.get_position();
+    return leverEncoder.get_angle()/100;
 }
 
 
 
-const int leverMaxAngle = 320;
-const int leverMinAngle = 0;
+const int leverMaxAngleUP = 300;
+const int leverMaxAngleDOWN = 310;//313;
+const int leverMinAngle = 178;
 
 
-
+//int antiBeater = 0;
 void moveLever(int target) {
-    if (target > leverMaxAngle) {target = leverMaxAngle;}
+    if (target > leverMaxAngleDOWN) {target = leverMaxAngleDOWN;}
     else if (target < leverMinAngle) {target = leverMinAngle;}
 
     int pos = getLeverPosition();
     float power = 0;
-    float kP = 0.01;
+    float kP = 0.005;
 
-    power = kP * (target - pos);
-    leverMotorLeft.move_voltage(12000 * power);
-    leverMotorRight.move_voltage(12000 * power);
+    int error = (target - pos);
+
+
+
+    power = kP * error;
+    if (target > 280) {power = 1;}
+    if ((target > 280) && (abs(target - pos) < 15)) {power *= 0.01;}
+
+    
+
+    if (!fourBarPiston.is_extended()) {
+        int voltageMod = 1;
+        if (target < 200) {voltageMod = 2;}
+        leverMotorLeft.move_voltage(5000 * voltageMod * power);
+        leverMotorRight.move_voltage(5000 * voltageMod * power);
+    }
+    else {
+        
+        leverMotorLeft.move_voltage(12000 * power);
+        leverMotorRight.move_voltage(12000 * power);
+    }
 }
 
 
-void leverUp() {leverTarget = leverMaxAngle;}
+void leverUp() {
+    if (fourBarPiston.is_extended()) {
+        leverTarget = leverMaxAngleUP;
+    }
+    else {leverTarget = leverMaxAngleDOWN;}
+}
 
 void leverDown() {leverTarget = leverMinAngle;}
 
@@ -80,9 +104,24 @@ void leverDown() {leverTarget = leverMinAngle;}
 //Autonomous Shortcuts
 void leverUpBlocking() {
     backFlapOPEN();
-    leverTarget = leverMaxAngle;
+    pros::delay(150);
+    leverUp();
     int startTime = pros::millis();
-    while ((abs(leverTarget - getLeverPosition()) > 25) && (pros::millis() < startTime + 2000)) {
+    while ((abs(leverTarget - getLeverPosition()) > 25) && (pros::millis() < startTime + 1000)) {
+        pros::delay(10);
+    }
+    leverDown();
+}
+
+
+void leverScoreAmountBlocking(int blocks) {
+    backFlapOPEN();
+    pros::delay(150);
+    if (blocks < 1) {blocks = 1;}
+    if (blocks > 6) {blocks = 6;}
+    leverTarget = (leverMaxAngleUP/6) * blocks;
+    int startTime = pros::millis();
+    while ((abs(leverTarget - getLeverPosition()) > 25) && (pros::millis() < startTime + 1000)) {
         pros::delay(10);
     }
     leverTarget = leverMinAngle;
@@ -91,16 +130,12 @@ void leverUpBlocking() {
 }
 
 
-void leverScoreAmountBlocking(int blocks) {
+void leverSetCustomTarget(int target) {
     backFlapOPEN();
-    if (blocks < 1) {blocks = 1;}
-    if (blocks > 6) {blocks = 6;}
-    leverTarget = (leverMaxAngle/6) * blocks;
+    pros::delay(150);
+    leverTarget = target;
     int startTime = pros::millis();
-    while ((abs(leverTarget - getLeverPosition()) > 25) && (pros::millis() < startTime + 2000)) {
+    while ((abs(leverTarget - getLeverPosition()) > 25) && (pros::millis() < startTime + 1000)) {
         pros::delay(10);
     }
-    leverTarget = leverMinAngle;
-    pros::delay(250);
-    backFlapCLOSE();
 }

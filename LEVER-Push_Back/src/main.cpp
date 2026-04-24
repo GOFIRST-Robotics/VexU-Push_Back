@@ -18,7 +18,9 @@ void initialize() {
     pros::lcd::set_text(0, "Initialize");
     chassis.calibrate(); // calibrate sensors
     pros::delay(250);
-    initSelector(2, 5); //Initalize seleector with default auto and amount of autos
+    initSelector(7, 11); //Initalize seleector with default auto and amount of autos
+    initLever();
+
 }
 
 /**
@@ -47,11 +49,23 @@ void competition_initialize() {
         timerSelect();
         selector();
         if (getSelectedAuto() == 0) {printToBoth("DO NOTHING");}
-        else if (getSelectedAuto() == 1) {printToBoth("Lever STANDARD");}
-        else if (getSelectedAuto() == 2) {printToBoth("Lever GREED");}
-        else if (getSelectedAuto() == 3) {printToBoth("Lever NonGREED");}
-        else if (getSelectedAuto() == 4) {printToBoth("Lever LONG + INTERFERE");}
-        else if (getSelectedAuto() == 5) {printToBoth("Lever MID + LONG + INTERFERE");}
+        else if (getSelectedAuto() == 1) {printToBoth("Lever STANDARD WING");}
+        else if (getSelectedAuto() == 2) {printToBoth("Lever STANDARD WING DISRUPT");}
+        else if (getSelectedAuto() == 3) {printToBoth("Lever STANDARD DISRUPT");}
+
+        else if (getSelectedAuto() == 4) {printToBoth("Lever 4Low 6 Long WING");}
+        else if (getSelectedAuto() == 5) {printToBoth("Lever 4Low 6 Long WING + DISRUPT");}
+        else if (getSelectedAuto() == 6) {printToBoth("Lever 4Low 6 Long DISRUPT");}
+
+        else if (getSelectedAuto() == 7) {printToBoth("Lever GREED WING");}
+        else if (getSelectedAuto() == 8) {printToBoth("Lever GREED WING + DISRUPT");}
+        else if (getSelectedAuto() == 9) {printToBoth("Lever GREED DISRUPT");}
+
+        else if (getSelectedAuto() == 10) {printToBoth("Lever Elims WING");}
+        else if (getSelectedAuto() == 11) {printToBoth("Lever Elims WING + DISRUPT");}
+
+
+
         else {printToBoth("Unknown Auto");}
         pros::delay(10);
     }
@@ -75,16 +89,22 @@ void autonomous() {
     controller.clear_line(0);
 
     startTimer();
-    initLever();
-    drakeUP();
-    debugAuto();
 
     if (getSelectedAuto() == 0) {}
-    else if (getSelectedAuto() == 1) {}
-    else if (getSelectedAuto() == 2) {}
-    else if (getSelectedAuto() == 3) {}
-    else if (getSelectedAuto() == 4) {}
+    else if (getSelectedAuto() == 1) {rightStandardWing();}
+    else if (getSelectedAuto() == 2) {rightStandardWingDisrupt();}
+    else if (getSelectedAuto() == 3) {rightStandardDisrupt();}
 
+    else if (getSelectedAuto() == 4) {rightFourLowSixLongWing();}
+    else if (getSelectedAuto() == 5) {rightFourLowSixLongWingDisrupt();}
+    else if (getSelectedAuto() == 6) {rightFourLowSixLongDisrupt();}
+
+    else if (getSelectedAuto() == 7) {rightGreedWing();}
+    else if (getSelectedAuto() == 8) {rightGreedWingDisrupt();}
+    else if (getSelectedAuto() == 9) {rightGreedDisrupt();}
+
+    else if (getSelectedAuto() == 10) {rightElimsWing();}
+    else if (getSelectedAuto() == 11) {rightElimsWingDisrupt();}
 }
 
 
@@ -104,6 +124,7 @@ void autonomous() {
 void opcontrol() {
     pros::lcd::set_text(0, "opControl");
     driverNOAH();
+
 
 
 }

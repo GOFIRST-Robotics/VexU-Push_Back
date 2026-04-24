@@ -10,7 +10,7 @@ pros::MotorGroup right_motor_group({-16, 17, -18, 19, -20}, pros::MotorGearset::
 
 // Odom Sensors
 pros::Imu imu(21);
-pros::Rotation vertical_encoder(15);
+pros::Rotation vertical_encoder(-15);
 
 
 // drivetrain settings
@@ -33,26 +33,26 @@ lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel
                             &imu // inertial sensor
 );
 
-lemlib::ControllerSettings lateral_controller(6, // proportional gain (kP)
+lemlib::ControllerSettings lateral_controller(6.6, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              10, // derivative gain (kD) 4.5
+                                              16, // derivative gain (kD) 4.5
                                               10, // anti windup
                                               1, // small error range, in inches
                                               100, // small error range timeout, in milliseconds
                                               3, // large error range, in inches
                                               300, // large error range timeout, in milliseconds
-                                              15 // maximum acceleration (slew)
+                                              0 // maximum acceleration (slew)
 );
 
 // angular PID controller
-lemlib::ControllerSettings angular_controller(1, // proportional gain (kP)
+lemlib::ControllerSettings angular_controller(1.25, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              3, // derivative gain (kD)
+                                              8, // derivative gain (kD)
                                               0, // anti windup
-                                              5, // small error range, in degrees
-                                              100, // small error range timeout, in milliseconds
-                                              10, // large error range, in degrees
-                                              1000, // large error range timeout, in milliseconds
+                                              10, // small error range, in degrees
+                                              1000, // small error range timeout, in milliseconds
+                                              5, // large error range, in degrees
+                                              100, // large error range timeout, in milliseconds
                                               0 // maximum acceleration (slew)
 );
 

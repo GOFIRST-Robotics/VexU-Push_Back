@@ -82,8 +82,10 @@ void opcontrol(void);
 #include "robotSubSystems/lever.hpp"
 #include "robotSubSystems/smartAligner.hpp"
 
-//#include "Autons/leftSAFE.hpp"
-//#include "Autons/leftGOALRUSH.hpp"
+#include "Autons/rightSAFE.hpp"
+#include "Autons/rightGOALRUSH.hpp"
+#include "Autons/rightGREED.hpp"
+#include "Autons/rightELIMS.hpp"
 
 #include "Drivers/NOAH.hpp"
 #include "Drivers/DANIEL.hpp"

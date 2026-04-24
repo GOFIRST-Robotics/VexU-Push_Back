@@ -19,3 +19,4 @@ void leverDown(void);
 //Autonomous Shortcuts
 void leverUpBlocking(void);
 void leverScoreAmountBlocking(int blocks);
+void leverSetCustomTarget(int target);

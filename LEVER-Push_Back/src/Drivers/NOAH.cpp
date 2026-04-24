@@ -12,6 +12,9 @@ static int SCRAPER_DELAY = 20;
 int j = 0;
 int sc = 0;
 
+int backFlapCloseTimer;
+int leverDelay = 10;
+
 void driverNOAH() {
     controller.print(0,0,"Driver - Noah");
     while(true) {
@@ -32,13 +35,12 @@ void driverNOAH() {
         /*
         * ------- intake stuff -------  
         */
-        // TODO: This first IF statement checks if the lever is up, and outtakes if it is.
-        // We need to find a good value to determine if it is up or not
-        if (getLeverPosition() >> 0 && !score) {
-            // outtake
+
+        if ((getLeverPosition() > 200)) {
+            intakeOutFAST();
         }
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-            if (modifier1) {
+        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+            if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
                 intakeOutFAST();
             }
             else {
@@ -57,25 +59,37 @@ void driverNOAH() {
 
 
         /*
-        * ------- Lever Stuff --------
-        */
-        if (score) {
-            leverUp();
-        }
-        else {
-            leverDown();
-        }
-
-        
-        /*
         * ------- 4 Bar Flap Controls --------
         */
         if ((score) || (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && modifier1)) {
             backFlapOPEN();
+            backFlapCloseTimer = 35;
+            
         }
         else {
-            backFlapCLOSE();
+            if (backFlapCloseTimer < 1) {backFlapCLOSE();}
+            backFlapCloseTimer--;
+            if (backFlapCloseTimer < 0) {backFlapCloseTimer = 0;}
+            
         } 
+
+        /*
+        * ------- Lever Stuff --------
+        */
+        if (score) {
+            leverDelay--;
+            if (leverDelay < 1) {leverUp();}
+            
+        }
+        else {
+           
+                leverDown();
+                leverDelay = 10;
+            
+        }
+
+        
+
 
 
         /*
@@ -138,13 +152,20 @@ void driverNOAH() {
         */
         if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2) && !modifier1) {
             drakeDOWN();
-            //scraperDOWN();
         }
         else {
             drakeUP();
-            //scraperUP();
         }
 
+
+        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
+            leverMotorLeft.move_voltage(12000);
+            leverMotorRight.move_voltage(12000);
+        }
+        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
+            leverMotorLeft.move_voltage(-12000);
+            leverMotorRight.move_voltage(-12000);
+        }
         
         pros::delay(10);
     }
