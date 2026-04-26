@@ -1,6 +1,6 @@
 #include "main.h"
 
-float doAtTime = 10000;
+float doAtTime = 20500;
 pros::adi::DigitalIn timerSelectButton('D');
 
 
@@ -15,7 +15,7 @@ void timerSelect() {
         }
 
         counter++;
-        if (doAtTime >= 30000) {doAtTime = 0;}
+        if (doAtTime >= 31000) {doAtTime = 0;}
     }
 
     else {counter = 0;}

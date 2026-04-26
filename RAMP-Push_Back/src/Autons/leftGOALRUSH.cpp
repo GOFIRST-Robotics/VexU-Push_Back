@@ -53,7 +53,7 @@ void leftFourLowSixLongMAIN() {
 
 
     //moveToAlignerReset(60, 121, 42, 120, cardinalWEST, 1000);   //Reset Goal 2
-    chassis.moveToPoint(60, 120.5, 1500, {.forwards = false, .maxSpeed = 65});   //Reset Goal 2
+    chassis.moveToPoint(60, 121.5, 1500, {.forwards = false, .maxSpeed = 65});   //Reset Goal 2
     pros::delay(1000);
     intakeScore();
     scraperUP();
@@ -74,7 +74,7 @@ void leftFourLowSixLongWing() {
     chassis.turnToHeading(cardinalEAST, 650);
     drakeDOWN();
 
-    chassis.moveToPoint(53, 108, 1000);   //Drake
+    chassis.moveToPoint(53, 109, 1000);   //Drake
 
 
     waitUntilTime();    //Wait to Drake

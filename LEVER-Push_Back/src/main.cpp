@@ -18,7 +18,7 @@ void initialize() {
     pros::lcd::set_text(0, "Initialize");
     chassis.calibrate(); // calibrate sensors
     pros::delay(250);
-    initSelector(7, 11); //Initalize seleector with default auto and amount of autos
+    initSelector(1, 11); //Initalize selector with default auto and amount of autos
     initLever();
 
 }
@@ -106,6 +106,8 @@ void autonomous() {
     else if (getSelectedAuto() == 10) {rightElimsWing();}
     else if (getSelectedAuto() == 11) {rightElimsWingDisrupt();}
 }
+
+
 
 
 /**

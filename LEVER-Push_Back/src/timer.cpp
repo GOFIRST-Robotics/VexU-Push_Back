@@ -1,24 +1,19 @@
 #include "main.h"
 
-float doAtTime = 15000;
+float doAtTime = 20500;
 pros::adi::DigitalIn timerSelectButton('D');
 
 
+bool lastPressed = false;
 int counter = 0;
 void timerSelect() {
-    if (isCenterLCDPressed()) {// Button is pressed
-        if (counter == 0) {doAtTime += 500;}
-
-        else if (counter > 12) {
-                counter = 10;
-                doAtTime += 500;
-        }
-
-        counter++;
-        if (doAtTime >= 30000) {doAtTime = 0;}
+    bool currentPressed = isCenterLCDPressed();
+    if (currentPressed && !lastPressed) {// Button is pressed
+        doAtTime += 500;
+        if (doAtTime >= 31000) {doAtTime = 0;}
     }
+    lastPressed = currentPressed;
 
-    else {counter = 0;}
 
     char buffer[50];
     sprintf(buffer, "Action at time: %.1f sec", doAtTime/1000.0);

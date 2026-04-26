@@ -32,12 +32,23 @@ void leftStandardMain() {
 
     moveToAlignerReset(60, 121, 42, 120, cardinalWEST, 1000);   //Reset Goal 1
     intakeScore();
-    pros::delay(550);
+    pros::delay(700);
+    intakeSTOP();
 
 
-    chassis.moveToPoint(20,120, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 2
+    chassis.moveToPoint(31,121, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Half neatues
+    chassis.turnToHeading(cardinalNORTHWEST, 750, {}, false);
+    intakeScore();
+    pros::delay(600);
+    chassis.turnToHeading(cardinalWEST-14, 750, {}, false);
+
+
+
+    chassis.moveToPoint(20,121, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 2
     chassis.turnToHeading(cardinalWEST, 500, {.earlyExitRange = 2});
-    chassis.moveToPoint(4, 120, 1500, {.maxSpeed = 50, .minSpeed = 30});  //Match Loader 2
+    intakeInFAST();
+
+    chassis.moveToPoint(4, 121, 1500, {.maxSpeed = 50, .minSpeed = 30});  //Match Loader 2
     pros::delay(250);
     intakeInFAST();
     chassis.waitUntilDone();

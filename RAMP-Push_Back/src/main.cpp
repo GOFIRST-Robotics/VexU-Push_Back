@@ -5,6 +5,7 @@
 #include <list>
 #include <string>
 
+pros::adi::DigitalIn initializationBlocker('A');
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -17,7 +18,7 @@ void initialize() {
     pros::lcd::set_text(0, "Initialize");
     chassis.calibrate(); // calibrate sensors
     pros::delay(250);
-    initSelector(8, 8); //Initalize seleector with default auto and amount of autos
+    initSelector(1, 8); //Initalize seleector with default auto and amount of autos
 }
 
 /**
@@ -40,8 +41,8 @@ void disabled() {
  */
 void competition_initialize() {
     pros::lcd::set_text(0, "Competition Initialize");
-    
-    while(true) {
+    bool lockout = false;
+    while(!lockout) {
         timerSelect();
         selector();
         if (getSelectedAuto() == 0) {printToBoth("DO NOTHING");}
@@ -56,6 +57,12 @@ void competition_initialize() {
         else if (getSelectedAuto() == 7) {printToBoth("Ramp Elims WING");}
         else if (getSelectedAuto() == 8) {printToBoth("Ramp Elims WING + DISRUPT");}
         else {printToBoth("Unknown Auto");}
+
+        if (initializationBlocker) {
+            pros::delay(500);
+            chassis.calibrate();
+            lockout = true;
+        }
     }
     pros::delay(10);
 }
@@ -90,6 +97,7 @@ void autonomous() {
     else if (getSelectedAuto() == 7) {leftElimsWing();}
     else if (getSelectedAuto() == 8) {leftElimsWingDisrupt();}
 }
+
 
 
 /**

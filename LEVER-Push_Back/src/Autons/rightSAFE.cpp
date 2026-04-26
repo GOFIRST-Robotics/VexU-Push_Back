@@ -10,21 +10,21 @@ void rightStandardMain() {
     chassis.turnToHeading(cardinalNORTHEAST, 300);
     chassis.moveToPoint(59,62, 700, {.maxSpeed = 127}); //Mid goal
     //pros::delay(500);
-    intakeOutSLOW();
+    intakeOutSuperSLOW();
     chassis.waitUntilDone();
-    pros::delay(550);
+    pros::delay(750);   /////Changed from 550
     intakeSTOP();
 
 
-    chassis.moveToPoint(26,27, 2000, {.forwards = false, .maxSpeed = 100}); //Long movement
+    chassis.moveToPoint(26,26, 2000, {.forwards = false, .maxSpeed = 100}); //Long movement
     chassis.turnToHeading(cardinalWEST, 1000, {.maxSpeed = 90});    //turn to match loader
     scraperDOWN();
     intakeInFAST();
 
 
-    chassis.moveToPoint(20,28, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 1
+    chassis.moveToPoint(20,26.5, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 1
     chassis.turnToHeading(cardinalWEST, 500, {.earlyExitRange = 2});
-    chassis.moveToPoint(0, 27, 1500, {.maxSpeed = 50, .minSpeed = 30});  //Match Loader 1
+    chassis.moveToPoint(0, 26, 1900, {.maxSpeed = 50, .minSpeed = 30});  //Match Loader 1
     fourBarUP();
 
 
@@ -37,7 +37,7 @@ void rightStandardMain() {
     scraperUP();
 
 
-    chassis.moveToPoint(32,26, 1500, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 2
+    chassis.moveToPoint(32,26, 1900, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 2
 
 
     chassis.turnToHeading(cardinalSOUTHWEST, 500, {.earlyExitRange = 2}, false);
@@ -95,6 +95,7 @@ void rightStandardWingDisrupt() {
     scraperUP();
     chassis.turnToHeading(cardinalEAST, 650);
     drakeDOWN();
+    pros::delay(500);//////////////////////////////////////////////////////////////////////////////////////////////////
 
     chassis.moveToPoint(53, 32, 1000);   //Drake
 
@@ -102,7 +103,7 @@ void rightStandardWingDisrupt() {
     chassis.moveToPoint(66, 36, 1000);   //Drake
     chassis.waitUntilDone();
 
-    waitUntilTime();
+    //waitUntilTime();
 
     drakeUP();
     pros::delay(550);

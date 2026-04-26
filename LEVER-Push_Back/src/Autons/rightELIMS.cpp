@@ -15,7 +15,7 @@ void rightElimsMAIN() {
     chassis.moveToPoint(20,25, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 1
     fourBarUP();
     chassis.turnToHeading(cardinalWEST, 300, {.earlyExitRange = 2});
-    chassis.moveToPoint(0, 25, 750, {.maxSpeed = 40, .minSpeed = 30}, false);  //Match Loader 1
+    chassis.moveToPoint(0, 25, 1000, {.maxSpeed = 40, .minSpeed = 30}, false);  //Match Loader 1
     scraperUP();
 
 
