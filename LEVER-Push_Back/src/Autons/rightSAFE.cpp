@@ -31,7 +31,7 @@ void rightStandardMain() {
 
 
     chassis.moveToPoint(60, 25, 1500, {.forwards = false, .maxSpeed = 65}, false);   //Reset Goal 1
-    leverSetCustomTarget(265);
+    leverSetCustomTarget(270);
     pros::delay(50);
     intakeOutFAST();
     scraperUP();
@@ -43,6 +43,7 @@ void rightStandardMain() {
     chassis.turnToHeading(cardinalSOUTHWEST, 500, {.earlyExitRange = 2}, false);
     backFlapCLOSE();
     leverDown();
+    //leverUpBlocking();
     pros::delay(750);
     chassis.turnToHeading(cardinalWEST+9, 500, {.earlyExitRange = 2});
     scraperDOWN();
@@ -56,6 +57,9 @@ void rightStandardMain() {
     chassis.moveToPoint(60, 25, 1500, {.forwards = false, .maxSpeed = 65});   //Reset Goal 2
     pros::delay(1100);
     scraperUP();
+
+    leverSetCustomTarget(265);
+    pros::delay(100);
     leverUpBlocking();
     pros::delay(75);
     leverUpBlocking();

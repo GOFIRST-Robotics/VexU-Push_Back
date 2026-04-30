@@ -1,0 +1,14 @@
+#include "main.h"
+
+pros::adi::Pneumatics scraperPiston('H', false);
+
+//NOTE: TRUE IS DOWN, FALSE IS UP
+
+// Scraper Shortcuts
+void scraperDOWN() {
+    scraperPiston.set_value(true);
+}
+
+void scraperUP() {
+    scraperPiston.set_value(false);
+}

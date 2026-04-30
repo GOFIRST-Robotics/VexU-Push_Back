@@ -1,6 +1,6 @@
 #include "main.h"
 
-float doAtTime = 20500;
+float doAtTime = 8000;
 pros::adi::DigitalIn timerSelectButton('D');
 
 

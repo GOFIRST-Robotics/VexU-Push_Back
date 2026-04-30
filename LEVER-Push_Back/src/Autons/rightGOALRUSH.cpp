@@ -50,6 +50,9 @@ void rightFourLowSixLongMAIN() {
     chassis.moveToPoint(60, 26, 1500, {.forwards = false, .maxSpeed = 60});   //Reset Goal 2
     pros::delay(1100);
     scraperUP();
+    
+    leverSetCustomTarget(265);
+    pros::delay(100);
     leverUpBlocking();
     pros::delay(75);
     leverUpBlocking();

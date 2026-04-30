@@ -6,7 +6,7 @@ void rightElimsMAIN() {
 
     chassis.setPose(24,57.5, cardinalNORTH);
 
-    chassis.moveToPoint(24,26, 2000, {.forwards = false, .maxSpeed = 80}); //Long movement
+    chassis.moveToPoint(24,26.5, 2000, {.forwards = false, .maxSpeed = 80}); //Long movement
     chassis.turnToHeading(cardinalWEST, 1000, {.maxSpeed = 90});    //turn to match loader
     scraperDOWN();
     intakeInFAST();
@@ -24,6 +24,9 @@ void rightElimsMAIN() {
     chassis.moveToPoint(60, 25, 1500, {.forwards = false, .maxSpeed = 60});   //Reset Goal 2
     pros::delay(1100);
     scraperUP();
+
+    leverSetCustomTarget(265);
+    pros::delay(100);
     leverUpBlocking();
     pros::delay(75);
     leverUpBlocking();
@@ -44,12 +47,12 @@ void rightElimsWing() {
     chassis.turnToHeading(cardinalEAST, 650);
     drakeDOWN();
 
-    chassis.moveToPoint(55, 32, 1000);   //Drake
+    chassis.moveToPoint(51, 31, 1000);   //Drake
     chassis.swingToHeading(cardinalEAST, DriveSide::LEFT, 750, {.direction =AngularDirection::CCW_COUNTERCLOCKWISE});
 
 
     waitUntilTime();    //Wait to Drake
-    chassis.moveToPoint(67, 37, 1000);   //Drake
+    chassis.moveToPoint(66, 32, 1000);   //Drake
     chassis.waitUntilDone();
     //chassis.tank(5, -5); //low speed back
 }
@@ -64,10 +67,10 @@ void rightElimsWingDisrupt() {
     chassis.turnToHeading(cardinalEAST, 650);
     drakeDOWN();
 
-    chassis.moveToPoint(52, 33, 1000);   //Drake
+    chassis.moveToPoint(51, 32, 1000);   //Drake
 
 
-    chassis.moveToPoint(66, 37, 1000);   //Drake
+    chassis.moveToPoint(66, 32, 1000);   //Drake
     chassis.waitUntilDone();
 
     waitUntilTime();

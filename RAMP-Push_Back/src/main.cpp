@@ -5,7 +5,6 @@
 #include <list>
 #include <string>
 
-pros::adi::DigitalIn initializationBlocker('A');
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -58,8 +57,8 @@ void competition_initialize() {
         else if (getSelectedAuto() == 8) {printToBoth("Ramp Elims WING + DISRUPT");}
         else {printToBoth("Unknown Auto");}
 
-        if (initializationBlocker) {
-            pros::delay(500);
+        if (isAligned()) {
+            pros::delay(750);
             chassis.calibrate();
             lockout = true;
         }

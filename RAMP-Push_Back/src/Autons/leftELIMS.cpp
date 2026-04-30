@@ -9,7 +9,6 @@ void leftElimsMAIN() {
     chassis.moveToPoint(24,118.5, 2000, {.maxSpeed = 90}); //Long movement
     chassis.turnToHeading(cardinalWEST, 1000);    //turn to match loader
     scraperDOWN();
-    hoodUP();
     intakeInFAST();
 
 
@@ -17,6 +16,7 @@ void leftElimsMAIN() {
     chassis.turnToHeading(cardinalWEST, 500, {.earlyExitRange = 2});
     chassis.moveToPoint(4, 119.5, 750, {.maxSpeed = 50, .minSpeed = 30}, false);  //Match Loader 1
     intakeSTOP();
+    hoodUP();
 
 
     moveToAlignerReset(60, 121, 42, 120, cardinalWEST, 1000);   //Reset Goal 1

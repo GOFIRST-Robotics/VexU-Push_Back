@@ -6,7 +6,7 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // Motors
 pros::MotorGroup left_motor_group({10, -9, 21, -6, 7}, pros::MotorGearset::blue); // left motors use 600 RPM cartridges
-pros::MotorGroup right_motor_group({-1, 2, -3, 4, -5}, pros::MotorGearset::blue); // right motors use 600 RPM cartridges
+pros::MotorGroup right_motor_group({-1, 2, -3, 4, -13}, pros::MotorGearset::blue); // right motors use 600 RPM cartridges
 
 
 // Odom Sensors

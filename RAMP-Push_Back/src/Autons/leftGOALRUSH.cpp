@@ -41,7 +41,6 @@ void leftFourLowSixLongMAIN() {
     chassis.moveToPoint(26,118, 2000, {.maxSpeed = 100}); //Long movement
     chassis.turnToHeading(cardinalWEST-6, 1000);    //turn to match loader
     scraperDOWN();
-    hoodUP();
 
 
     chassis.moveToPoint(20,120, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 2
@@ -50,14 +49,19 @@ void leftFourLowSixLongMAIN() {
     chassis.moveToPoint(4, 120, 1500, {.maxSpeed = 50, .minSpeed = 30}, false);  //Match Loader 2
     pros::delay(1000);
     intakeSTOP();
+    hoodUP();
 
 
     //moveToAlignerReset(60, 121, 42, 120, cardinalWEST, 1000);   //Reset Goal 2
-    chassis.moveToPoint(60, 121.5, 1500, {.forwards = false, .maxSpeed = 65});   //Reset Goal 2
+    chassis.moveToPoint(60, 120.6, 1500, {.forwards = false, .maxSpeed = 65});   //Reset Goal 2
     pros::delay(1000);
     intakeScore();
+    pros::delay(500);
+    intakeOutFAST();
+    pros::delay(90);
+    intakeScore();
     scraperUP();
-    pros::delay(1350);
+    pros::delay(1000);
     intakeSTOP();
 }
 

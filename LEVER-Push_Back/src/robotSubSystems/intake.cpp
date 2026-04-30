@@ -65,7 +65,7 @@ void intakeOutSLOW(){
 }
 
 void intakeOutSuperSLOW(){
-    intakeMain.move_voltage(-6200);
+    intakeMain.move_voltage(-6800);
 }
 
 void intakeCustomSpeed(int multiplier){

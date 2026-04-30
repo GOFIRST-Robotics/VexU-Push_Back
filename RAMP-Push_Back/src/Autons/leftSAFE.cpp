@@ -16,7 +16,6 @@ void leftStandardMain() {
 
 
     chassis.moveToPoint(26,118, 2000, {.maxSpeed = 90}); //Long movement
-    hoodUP();
     chassis.turnToHeading(cardinalWEST-6, 400);    //turn to match loader
     scraperDOWN();
     intakeInFAST();
@@ -26,6 +25,7 @@ void leftStandardMain() {
     chassis.turnToHeading(cardinalWEST, 500, {.earlyExitRange = 2});
     chassis.moveToPoint(4, 119.5, 1500, {.maxSpeed = 50, .minSpeed = 30}, false);  //Match Loader 1
     intakeSTOP();
+    hoodUP();
 
 
 
@@ -46,6 +46,7 @@ void leftStandardMain() {
 
     chassis.moveToPoint(20,121, 1000, {.maxSpeed = 100, .minSpeed = 30});  //Match Loader 2
     chassis.turnToHeading(cardinalWEST, 500, {.earlyExitRange = 2});
+    hoodDOWN();
     intakeInFAST();
 
     chassis.moveToPoint(4, 121, 1500, {.maxSpeed = 50, .minSpeed = 30});  //Match Loader 2
@@ -54,13 +55,18 @@ void leftStandardMain() {
     chassis.waitUntilDone();
     pros::delay(750);
     intakeSTOP();
+    hoodUP();
 
 
     chassis.moveToPoint(60, 121, 1500, {.forwards = false, .maxSpeed = 65});   //Reset Goal 2
     pros::delay(1000);
     intakeScore();
+    pros::delay(500);
+    intakeOutFAST();
+    pros::delay(90);
+    intakeScore();
     scraperUP();
-    pros::delay(1350);
+    pros::delay(1000);
     intakeSTOP();
 }
 
@@ -73,16 +79,16 @@ void leftStandardWing() {
     leftStandardMain();
 
 
-    chassis.moveToPoint(37, 109, 1500);   //back away
+    chassis.moveToPoint(37, 107.4, 1500);   //back away
     scraperUP();
     chassis.turnToHeading(cardinalEAST, 650);
     drakeDOWN();
 
-    chassis.moveToPoint(53, 110, 1000);   //Drake
+    chassis.moveToPoint(53, 108.7, 1000);   //Drake
 
 
     waitUntilTime();    //Wait to Drake
-    chassis.moveToPoint(65, 108.5, 1000);   //Drake
+    chassis.moveToPoint(65, 108.5, 2000);   //Drake
     chassis.waitUntilDone();
     //chassis.tank(5, -5); //low speed back
 }
@@ -92,12 +98,12 @@ void leftStandardWingDisrupt() {
     leftStandardMain();
 
 
-    chassis.moveToPoint(37, 109, 1500);   //back away
+    chassis.moveToPoint(37, 107.4, 1500);   //back away
     scraperUP();
     chassis.turnToHeading(cardinalEAST, 650);
     
 
-    chassis.moveToPoint(63, 110, 1000);   //Drake
+    chassis.moveToPoint(63, 108.7, 1000);   //Drake
     drakeDOWN();
     chassis.waitUntilDone();
     waitUntilTime();
